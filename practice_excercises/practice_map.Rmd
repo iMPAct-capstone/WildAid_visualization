@@ -1,0 +1,71 @@
+---
+title: "practice_stuff"
+author: "Jared Petry"
+date: "2023-02-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+load packages: 
+```{r}
+library(tidyverse) 
+library(googlesheets4) 
+library(googledrive)
+library(leaflet)
+```
+
+Store the coordinates of the sites (just basic country coordinates for now)
+```{r}
+
+site <- c("bahamas", "coastal ecuador", "gabon", "galapagos", 
+          "indonesia", "palau", "tanzania", "mexico")
+
+lat <- c(25.0343,    # bahamas
+         -1.8312,     # coastal ecuador
+         -0.8037,     # gabon
+         -0.9538,     # galapagos
+         -0.7893,     # indonesia
+         7.5150,     # palau
+         -6.3690,     # tanzania
+         23.6345)    # mexico         
+
+lon <- c(-77.3963,     # bahamas
+         -78.1834,     # coastal ecuador
+         11.6094,     # gabon
+         -90.9656,     # galapagos
+         113.9213,    # indonesia
+         134.5825,    # palau
+         34.8888,     # tanzania
+         -102.5528)    # mexico 
+
+country_locations <- data.frame(site, lat, lon) 
+
+
+```
+
+
+Create a leaflet map 
+```{r}
+leaflet() |> 
+  addProviderTiles("Esri.WorldImagery") |> 
+  setView(zoom = 2, 
+          lat = 0,
+          lng = 0) |> 
+  addMiniMap(toggleDisplay = TRUE, minimized = TRUE) |> 
+  addMarkers(data = country_locations,
+             lat = country_locations$lat, 
+             lng = country_locations$lon,
+             popup = country_locations$site)
+```
+
+
+
+
+
+
+
+
+
