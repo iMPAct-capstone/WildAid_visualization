@@ -62,6 +62,15 @@ leaflet() |>
 ```
 
 
+Read in our MPS tracker data from google drive:
+```{r}
+# store drive_id for this spreadsheet: 
+
+# actually I think it may take a URL to find our google sheet
+url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
+
+MPS_tracker_data <- read_sheet(url)
+```
 
 
 
