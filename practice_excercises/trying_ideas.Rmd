@@ -1,0 +1,7 @@
+I think a ridgeline plot could be really cool... see this website on hoe to make one: https://r-graph-gallery.com/294-basic-ridgeline-plot.html
+I got some ideas from the website "from data to viz"
+
+For the map, I think it would be really cool to show a density plot of the total scores for that site
+this would be density on the y axis and score 1-5 on the x axis 
+here's a website on how to make a density plot:
+https://r-graph-gallery.com/21-distribution-plot-using-ggplot2.html
