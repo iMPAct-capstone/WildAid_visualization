@@ -48,10 +48,12 @@ Now let's try that with our data
 #   na.omit() # how do I get rid of NAs?
 
 # take out all rows that have "don't know or NA"
-MPS_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know or N/A"), ] |> na.omit()
-# 
+country_scores_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know or N/A"), ] |> 
+  na.omit() |> 
+  select(country, score)
+
   
-ggplot(MPS_no_na, aes(x = score, y = country, fill = country)) +
+ggplot(country_scores_no_na, aes(x = score, y = country, fill = country)) +
   geom_density_ridges() +
   theme_ridges() 
 ```
