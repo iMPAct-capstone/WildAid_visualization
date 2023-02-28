@@ -5,3 +5,75 @@ For the map, I think it would be really cool to show a density plot of the total
 this would be density on the y axis and score 1-5 on the x axis 
 here's a website on how to make a density plot:
 https://r-graph-gallery.com/21-distribution-plot-using-ggplot2.html
+
+Load libraries 
+```{r}
+library(ggplot2)
+library(ggridges) 
+library(googledrive) 
+library(googlesheets4) 
+library(dplyr)
+library(tidyverse)
+```
+
+
+Read in the data 
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
+
+MPS_tracker_data <- read_sheet(url)
+```
+
+Practice making a ridgeline plot with the diamonds dataset 
+```{r}
+ggplot(diamonds, aes(x = price, y = cut, fill = cut)) +
+  geom_density_ridges() +
+  theme_ridges() + 
+  theme(legend.position = "none")
+```
+
+Now let's try that with our data 
+```{r}
+# let's try to put the country on the y axis and the average score on the x axis 
+
+# make a mini data frame of what we want 
+# we have the problem that if we are to compare TOTAL scores accross countries, some countries have more sites and observations... this is why I'm going with the average for now
+# ACTUALLY uh oh... you can't do this type of plot with the grouped averages 
+
+# # this object is useless right now: 
+# country_total_scores <- MPS_tracker_data |> 
+#   mutate(as.factor(country)) |> 
+#   group_by(country) |> 
+#   summarise(sum_score = mean(as.numeric(score), na.rm = TRUE), na.rm = TRUE) |> 
+#   na.omit() # how do I get rid of NAs?
+
+# take out all rows that have "don't know or NA"
+MPS_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know or N/A"), ] |> na.omit()
+# 
+  
+ggplot(MPS_no_na, aes(x = score, y = country, fill = country)) +
+  geom_density_ridges() +
+  theme_ridges() 
+```
+
+```{r}
+# another tester one: 
+# library
+library(ggridges)
+library(ggplot2)
+library(viridis)
+library(hrbrthemes)
+
+# Plot
+ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x..)) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis(name = "Temp. [F]", option = "C") +
+  labs(title = 'Temperatures in Lincoln NE in 2016') +
+  theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8)
+    )
+```
+
