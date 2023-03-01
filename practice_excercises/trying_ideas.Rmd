@@ -54,7 +54,7 @@ country_scores_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know
 
   
 ggplot(country_scores_no_na, aes(x = score, y = country, fill = country)) +
-  geom_density_ridges() +
+  geom_density_ridges(scale = 1.2) +
   theme_ridges() 
 ```
 
@@ -78,4 +78,32 @@ ggplot(lincoln_weather, aes(x = `Mean Temperature [F]`, y = `Month`, fill = ..x.
       strip.text.x = element_text(size = 8)
     )
 ```
+
+Try making a density plot comparing two things with transparency
+```{r}
+# compare surveillance and enforcement scores across all sites in 2022
+# by the way I think I deleted "MPS_no_na" somehow so you'll have to recreate it later
+surveillance_df <- MPS_no_na |> 
+  filter(category == "Surveilance and Enforcement", 
+         site == c("Bahamas EEZ", 
+                   "Celestun Fishery Refuge", 
+                   "Costa del Ecuador", 
+                   "National Parcs", 
+                   "PAN", 
+                   "Scorpion Reef National Park (Arrecife Alacrane Bioshpere Reserve)"))
+
+  
+
+ggplot(data = surveillance_df, 
+       aes(x = score, group = site, fill = site)) + 
+  geom_density(adjust = 1.5, alpha = 0.5) + 
+  theme(legend.position = "bottom") + 
+  theme_ipsum() + 
+  labs(title = "Density of surveillance and enforcement scores across five sites")
+```
+
+
+
+
+
 
