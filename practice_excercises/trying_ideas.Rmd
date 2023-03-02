@@ -14,6 +14,7 @@ library(googledrive)
 library(googlesheets4) 
 library(dplyr)
 library(tidyverse)
+library(radiant.data)
 ```
 
 
@@ -105,15 +106,113 @@ ggplot(data = surveillance_df,
 ```
 
 # I have an idea! compare certain aspects of the enforcement strategy with the END GOAL. There are a couple end goals that we could go for: 
-- decreased bicatch 
-- community benefits 
-- decreased protected hunting 
-- declining infractions 
-- marine population status
+- decreased bicatch (8 observations)
+- community benefits (8 observations)
+- decreased protected hunting (8 observations)
+- declining infractions (8 observations) 
+- marine population status (8 observations)
 possibly more! 
 
 a useful question to ask could be something like: how does community involvement affect decreased bicatch... haha that could be interesting to understand! BUT we would need a different type of dataset for this... I don't even think that this dataset is tidy yet!! we need to have a single row for an entire year at a certain site... how can we do this? pivot _wide() ??
 obviously there is not much data for making specific inferences yet, but this program provides a framework to eventually do that... and we should brag about the fact that this is the first tool to track and monitor the marine enforcement efforts. This is why this is so important... say stuff like this in the next presentation!! 
+
+
+create pivot wide dataframe where each row is a years worth of data 
+```{r}
+# create unique id column for each annual site entry (called "id")
+MPS_tracker_data$id <- paste(MPS_tracker_data$year, MPS_tracker_data$site, sep = "_")
+
+MPS_wide <- MPS_tracker_data |> 
+  pivot_wider(id_cols = id, 
+              names_from = sub_category, 
+              values_from = score) |> 
+  janitor::clean_names()
+
+# where are all these null values coming from??
+null_explore <- MPS_tracker_data |> 
+  filter(score == "NULL") # ----- welp not from here! there are no values that say "NULL"
+
+# from looking at the wide data structure it looks like there are duplicate rows with different score values... some two some 3??
+# --- one row that has this is 2020_Bahamas EEZ ... (2 for the sanctions and prosecutions) let's take a look at it 
+bahamas_eez_2020 <- 
+  MPS_tracker_data |> filter(id == "2020_Bahamas EEZ", 
+                             sub_category == "Sanctions & Prosecutions")
+
+
+
+```
+
+how many duplicate rows do we have 
+```{r}
+print(duplicated(MPS_tracker_data)) # welp it looks like there are now duplicate rows... so why are there some multiple values in our wide data frame ??
+```
+
+Explore data w `dtab()` 
+```{r}
+dtab(MPS_tracker_data)
+```
+
+Cases where there are duplicate scores for some reason: 
+- 2020 bahamas eez has two entries for sanctions and prosecutions 
+- many more 
+
+First let's try making a corrplot with all these variables: 
+```{r}
+library(corrplot)
+MPS_wide_num <- as.numeric(MPS_wide)
+MPS_cor <- cor(MPS_wide[, unlist(lapply(data, is.numeric))])
+corrplot(MPS_cor, method = "number")
+
+# check class of values 
+class(MPS_wide[5,20])
+```
+
+```{r}
+# try the function unnest(): 
+MPS_unnest <- unnest(MPS_wide, cols = c(international_institutional_collaboration))
+MPS_unnest <- unnest(MPS_unnest, cols = c(national_institutional_collaboration))
+MPS_unnest <- unnest(MPS_unnest, cols = c(staff_numbers))
+MPS_unnest <- unnest(MPS_unnest, cols = c(vessel_availability))
+MPS_unnest <- unnest(MPS_unnest, cols = c(community_benefits))
+MPS_unnest <- unnest(MPS_unnest, cols = c(sanctions_prosecutions))
+MPS_unnest <- unnest(MPS_unnest, cols = c(standard_operating_procedures))
+MPS_unnest <- unnest(MPS_unnest, cols = c(fishing_sector_collaboration))
+MPS_unnest <- unnest(MPS_unnest, cols = c(funding))
+
+# WARNING: THIS FUCKED UP THE DATA.. PROBABLY SHOULDN'T USE IT NOT SURE WHAT I JUST DID 
+# JUST FOR FUN LET'S SEE IF WE CAN MAKE A SCATTERPLOT WITH IT 
+
+# don't work m8
+# ggplot(data = MPS_unnest, aes(x = funding, y = decreased_protected_hunting)) + geom_point()
+
+
+
+# national_institutional_collaboration,
+                                        # staff_numbers,
+                                        # vessel_availability,
+                                        # community_benefits,
+                                        # sanctions_prosecutions,
+                                        # standard_operating_procedures,
+                                        # fishing_sector_collaboration,
+                                        # funding
+
+# --- ok let's try a different way I found online:
+#MPS_unnest <- setNames(with(MPS_wide, data.frame(rep(id,lengths(staff_numbers)),unlist(staff_numbers))),names(MPS_wide))
+
+```
+
+
+try making a scatter plot with regression line for some variable comparisons: 
+```{r}
+# ggplot(data = MPS_wide, 
+#        aes(x = vessel))
+```
+
+
+
+
+
+
 
 
 
