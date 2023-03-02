@@ -83,6 +83,8 @@ Try making a density plot comparing two things with transparency
 ```{r}
 # compare surveillance and enforcement scores across all sites in 2022
 # by the way I think I deleted "MPS_no_na" somehow so you'll have to recreate it later
+MPS_no_na <- MPS_tracker_data |> na.omit()
+
 surveillance_df <- MPS_no_na |> 
   filter(category == "Surveilance and Enforcement", 
          site == c("Bahamas EEZ", 
@@ -102,7 +104,16 @@ ggplot(data = surveillance_df,
   labs(title = "Density of surveillance and enforcement scores across five sites")
 ```
 
+# I have an idea! compare certain aspects of the enforcement strategy with the END GOAL. There are a couple end goals that we could go for: 
+- decreased bicatch 
+- community benefits 
+- decreased protected hunting 
+- declining infractions 
+- marine population status
+possibly more! 
 
+a useful question to ask could be something like: how does community involvement affect decreased bicatch... haha that could be interesting to understand! BUT we would need a different type of dataset for this... I don't even think that this dataset is tidy yet!! we need to have a single row for an entire year at a certain site... how can we do this? pivot _wide() ??
+obviously there is not much data for making specific inferences yet, but this program provides a framework to eventually do that... and we should brag about the fact that this is the first tool to track and monitor the marine enforcement efforts. This is why this is so important... say stuff like this in the next presentation!! 
 
 
 
