@@ -1,0 +1,95 @@
+---
+title: "adelaide_graph"
+author: "Adelaide Robinson"
+date: "2023-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(googlesheets4)
+library(tidyverse)
+```
+
+
+Visualize some aspect of your data assignment for EDS-240.
+
+#Read in the Data 
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
+
+MPS_tracker_data <- read_sheet(url)
+
+test <- MPS_tracker_data |> group_by(year, site, sub_category) |> summarize(n()) 
+```
+
+#Wrangle Data
+
+```{r}
+new_data <- MPS_tracker_data |>
+  filter(str_detect(site, "Galapagos")) |> 
+  filter(! indicator_type == "Impact Indicators") |>  #remove Impact indicators 
+  mutate(site = "Galapagos EEZ", score = as.numeric(score)) |>  #call it same site to connect EEZ with later data
+ group_by(site, year, category) |>
+  summarize(score = round(mean(score, na.rm = TRUE),0))  #find mean for each category 
+  
+# Stacked
+ggplot(new_data, aes(fill=category, y=score, x=year)) + 
+    geom_bar(position="stack", stat="identity") + labs(title = "Galapagos EEZ", y = "Average Score", x = "Category") + scale_fill_manual(values=c("#eb6c04",
+                             "#00adaa",
+                             "#003e70",
+                             "#f68e8a",
+                             "#6aaf5a"))
+
+```
+
+Doing the same thing but instead using total score. Need to make sure we are including the exact same categories each year, otherwise we won't be able to compare between years. 
+
+```{r}
+total_data <- MPS_tracker_data |>
+  filter(str_detect(site, "Galapagos")) |> 
+  filter(! indicator_type == "Impact Indicators") |> 
+  mutate(score = as.numeric(score)) #we know impact indicators were not included 
+  
+
+#come up with the sub-categories that are in all years
+dat_19 <- total_data |> filter(year == 2019) 
+
+dat_20 <- total_data |> filter(year == 2020)
+dat_21 <- total_data |> filter(year == 2021)
+dat_22 <- total_data |> filter(year == 2022)
+
+#inner join to keep only categories in both years
+combined <- inner_join(dat_19, dat_20, by = "sub_category") |> select(sub_category)
+
+#inner join to keep only categories in both years
+combined_2 <- inner_join(combined, dat_22) |> select(sub_category)
+
+#inner join to keep only categories in both years
+new <- inner_join(combined_2, dat_21) |> filter(!sub_category == "Cost-Efficiency")
+
+#list of categories in both years
+list <- new$sub_category
+
+final_test <- total_data |> filter(sub_category %in% list)
+
+
+final_new <- final_test |> group_by(category, year) |> 
+  summarise(total_score = sum(score), n())
+
+# Stacked
+ggplot(final_new, aes(fill=category, y=total_score, x=year)) + 
+    geom_bar(position="stack", stat="identity") + labs(title = "Galapagos EEZ", y = "Total Score") + scale_fill_manual(values=c("#eb6c04",
+                             "#00adaa",
+                             "#003e70",
+                             "#f68e8a",
+                             "#6aaf5a"))
+
+
+```
+
+
+
