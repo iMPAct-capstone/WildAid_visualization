@@ -86,7 +86,7 @@ Try making a density plot comparing two things with transparency
 # by the way I think I deleted "MPS_no_na" somehow so you'll have to recreate it later
 MPS_no_na <- MPS_tracker_data |> na.omit()
 
-surveillance_df <- MPS_no_na |> 
+surveillance_df <- MPS_tracker_data |> 
   filter(category == "Surveilance and Enforcement", 
          site == c("Bahamas EEZ", 
                    "Celestun Fishery Refuge", 
@@ -159,12 +159,21 @@ Cases where there are duplicate scores for some reason:
 First let's try making a corrplot with all these variables: 
 ```{r}
 library(corrplot)
-MPS_wide_num <- as.numeric(MPS_wide)
-MPS_cor <- cor(MPS_wide[, unlist(lapply(data, is.numeric))])
+#MPS_wide_num <- as.numeric(MPS_wide)
+# i think that cor requires matrix format 
+MPS_wide_matrix <- data.matrix(MPS_wide, rownames.force = NA)
+MPS_cor <- cor(MPS_wide_matrix, use = "complete.obs")
+
 corrplot(MPS_cor, method = "number")
 
 # check class of values 
 class(MPS_wide[5,20])
+library(Hmisc)
+all_cor <- rcorr(MPS_wide_matrix)
+#all_cor # running this will give a very large output so it's commented out here 
+# BUT we found some interesting correlations!! Let's see if we can test the significance 
+
+
 ```
 
 ```{r}
@@ -200,6 +209,29 @@ MPS_unnest <- unnest(MPS_unnest, cols = c(funding))
 #MPS_unnest <- setNames(with(MPS_wide, data.frame(rep(id,lengths(staff_numbers)),unlist(staff_numbers))),names(MPS_wide))
 
 ```
+### Scatter Plot 
+Let's plot some of the things that are correlated with each other to see if we can justify putting scatter plot functionality into the shiny app 
+```{r}
+## see if these correlations are actually significant
+cor.test(MPS_wide$decreased_protected_hunting, MPS_wide$surveillance_prioritization)
+# = significant 
+cor.test(MPS_wide$declining_infractions, MPS_wide$surveillance_prioritization)
+# = significant
+cor.test(MPS_wide$marine_population_status, MPS_wide$surveillance_prioritization)
+# = significant
+cor.test(MPS_wide$sighting_to_apprehension, MPS_wide$decreased_bycatch)
+# = significant
+cor.test(MPS_wide$decreased_protected_hunting, MPS_wide$surveillance_prioritization)
+# = 
+cor.test(MPS_wide$decreased_protected_hunting, MPS_wide$surveillance_prioritization)
+# =
+cor.test(MPS_wide$decreased_protected_hunting, MPS_wide$surveillance_prioritization)
+# = 
+cor.test(MPS_wide$decreased_protected_hunting, MPS_wide$surveillance_prioritization)
+# = 
+```
+
+
 
 
 try making a scatter plot with regression line for some variable comparisons: 
@@ -208,6 +240,19 @@ try making a scatter plot with regression line for some variable comparisons:
 #        aes(x = vessel))
 ```
 
+Line graph over time:
+```{r}
+dat_1 <- MPS_tracker_data |> 
+  filter(str_detect(site, "Galapagos"), 
+         sub_category == "Funding") |> 
+  na.omit() 
+
+ggplot(data = dat_1, 
+       mapping = aes(x = year, y = score, group = 1)) + 
+  geom_line() + 
+  geom_point() + 
+  labs(title = "Funding at Galapagos protected site")
+```
 
 
 
