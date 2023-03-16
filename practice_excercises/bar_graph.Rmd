@@ -34,11 +34,11 @@ new_data <- MPS_tracker_data |>
   filter(! indicator_type == "Impact Indicators") |>  #remove Impact indicators 
   mutate(site = "Galapagos EEZ", score = as.numeric(score)) |>  #call it same site to connect EEZ with later data
  group_by(site, year, category) |>
-  summarize(score = round(mean(score, na.rm = TRUE),0))  #find mean for each category 
+  summarize(score = round(mean(score, na.rm = TRUE),0)) |> ungroup()  #find mean for each category 
   
 # Stacked
 ggplot(new_data, aes(fill=category, y=score, x=year)) + 
-    geom_bar(position="stack", stat="identity") + labs(title = "Galapagos EEZ", y = "Average Score", x = "Category") + scale_fill_manual(values=c("#eb6c04",
+    geom_bar(position="stack", stat="identity") + labs(title = "Galapagos EEZ", y = "Average Score", x = "Year") + theme(text = element_text(size=20)) +  scale_fill_manual(values=c("#eb6c04",
                              "#00adaa",
                              "#003e70",
                              "#f68e8a",
@@ -46,12 +46,27 @@ ggplot(new_data, aes(fill=category, y=score, x=year)) +
 
 ```
 
+```{r}
+  filter(str_detect(site, "Galapagos")) |> 
+  filter(! indicator_type == "Impact Indicators") |>  #remove Impact indicators 
+  mutate(site = "Galapagos EEZ", score = as.numeric(score)) |>  #call it same site to connect EEZ with later data
+ group_by(site, year, category) |>
+  summarize(score = round(mean(score, na.rm = TRUE),0))  #find mean for each category 
+
++ labs(title = "Galapagos EEZ", y = "Average Score", x = "Category", axis.title=element_text(size=14,face="bold")) + scale_fill_manual(values=c("#eb6c04",
+                             "#00adaa",
+                             "#003e70",
+                             "#f68e8a",
+                             "#6aaf5a"))
+```
+
+
 Doing the same thing but instead using total score. Need to make sure we are including the exact same categories each year, otherwise we won't be able to compare between years. 
 
 ```{r}
 total_data <- MPS_tracker_data |>
   filter(str_detect(site, "Galapagos")) |> 
-  filter(! indicator_type == "Impact Indicators") |> 
+  filter(!indicator_type == "Impact Indicators") |> 
   mutate(score = as.numeric(score)) #we know impact indicators were not included 
   
 
@@ -88,8 +103,45 @@ ggplot(final_new, aes(fill=category, y=total_score, x=year)) +
                              "#f68e8a",
                              "#6aaf5a"))
 
-
 ```
 
+Line Graph
+
+```{r}
+new_data <- MPS_tracker_data |>
+  filter(str_detect(site, "Yuca")) |> 
+  filter(! indicator_type == "Impact Indicators") |>  #remove Impact indicators 
+  mutate(site = "Gabon EEZ", score = as.numeric(score)) |>  #call it same site to connect EEZ with later data
+ group_by(site, year, category) |>
+  summarize(score = round(mean(score, na.rm = TRUE),0)) |> ungroup()  #find mean for each category 
 
 
+new_data |> ggplot(aes(y = score, x = year, group = 1)) + geom_line(aes(col = category, group = category), position=position_dodge(w=.2), size =1) + ylim(c(1,5)) + labs(title = "Score by Category at Yucatán, Mexico", y= "Average Score")  + scale_color_manual(values=c("#eb6c04",
+                             "#00adaa",
+                             "#003e70",
+                             "#f68e8a",
+                             "#6aaf5a")) + theme(
+                             plot.title = element_text(size =20), axis.title = element_text(size = 15), legend.text = element_text(size = 15),legend.title = element_text(size = 15),
+                             
+         panel.background = element_rect(fill='transparent'),
+         plot.background = element_rect(fill='transparent', color=NA),
+         panel.grid.major = element_line(color = "grey"),
+         panel.grid.minor = element_blank(),
+         legend.background = element_rect(fill='transparent'),
+         legend.box.background = element_rect(fill='transparent')
+       )
+                             
+
+new_data |> ggplot(aes(y = score, x = year, group = 1)) + geom_line(aes(col= category), size = 2) + ylim(c(1,5)) + labs(title = "Score by Category at Yucatán, Mexico", y= "Average Score")  + scale_color_manual(values=c("#eb6c04",
+                             "#00adaa",
+                             "#003e70",
+                             "#f68e8a",
+                             "#6aaf5a")) + facet_wrap(~category) + theme(
+         panel.background = element_rect(fill='transparent'),
+         plot.background = element_rect(fill='transparent', color=NA),
+         panel.grid.major = element_line(color = "grey"),
+         panel.grid.minor = element_blank(),
+         legend.background = element_rect(fill='transparent'),
+         legend.box.background = element_rect(fill='transparent')
+       )
+                               
