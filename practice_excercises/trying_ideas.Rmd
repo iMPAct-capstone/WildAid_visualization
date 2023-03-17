@@ -171,7 +171,7 @@ class(MPS_wide[5,20])
 library(Hmisc)
 all_cor <- rcorr(MPS_wide_matrix)
 #all_cor # running this will give a very large output so it's commented out here 
-# BUT we found some interesting correlations!! Let's see if we can test the significance 
+#BUT we found some interesting correlations!! Let's see if we can test the significance 
 
 
 ```
