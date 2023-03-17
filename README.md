@@ -2,4 +2,4 @@
 
 The purpose of this repository is to visually display MPS tracker data. The final product will include an R Shiny application with interactive displays of MPS tracker data. 
 
-Visualizations will include previously collected data between 2019-2022, reformatted in the WildAid_data_reformatting repository. They will also incorporate future data entered in the R shiny application created in the WildAid_data_entry repository. 
+Visualizations will include previously collected data from 2019-2022, reformatted in the WildAid_data_reformatting repository. They will also incorporate future data entered in the R shiny application created in the WildAid_data_entry repository. 
