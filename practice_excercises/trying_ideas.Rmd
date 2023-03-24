@@ -360,32 +360,36 @@ Let's Try with our data!
 baham20 <- MPS_tracker_data |> 
   filter(site == "Bahamas EEZ", 
          year == "2020")
-baham20 <- baham20 |> arrange(sub_category, score) # for some reason this is creating output
-
+baham20 <- baham20 |> arrange(category) 
+baham20 <- baham20 |> arrange(category, score) # for some reason this is creating output
+# ok I think now it's in the format that we want 
 # set up angle for text 
 # Get the name and the y position of each label
-label_data <- baham20
-number_of_bar <- nrow(label_data)
-label_data$id_num <- seq(1, nrow(label_data))
-angle <- 90 - 360 * (label_data$id_num-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
-label_data$hjust <- ifelse( angle < -90, 1, 0)
-label_data$angle <- ifelse(angle < -90, angle+180, angle)
+number_of_bar <- nrow(baham20)
+baham20$id_num <- seq(1, nrow(baham20))
+angle <- 90 - 360 * (baham20$id_num-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+baham20$hjust <- ifelse( angle < -90, 1, 0)
+baham20$angle <- ifelse(angle < -90, angle+180, angle)
 
 
 # Make the plot
-p <- ggplot(data = baham20, aes(x = sub_category, y= score, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+p <- ggplot(data = baham20, aes(x = as.factor(id_num), y= score, fill=category)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
   geom_bar(stat = "identity") +
-  ylim(-3,15) +
+  ylim(-2,10) +
   theme_minimal() +
-  theme(
-    axis.text = element_blank(),
-    axis.title = element_blank(),
-    panel.grid = element_blank(),
-    plot.margin = unit(rep(-1,4), "cm") 
-  ) +
+   theme(
+     axis.text = element_blank(),
+     axis.title = element_blank(),
+     panel.grid = element_blank(),
+     #plot.margin = unit(rep(-1,4), "cm") 
+   ) +
   coord_polar(start = 0) + 
-  geom_text(data = label_data, aes(x=sub_category, y=score + 1, label=sub_category, hjust=hjust), color="black", fontface="bold", alpha=.8, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) 
- 
+  
+  geom_text(data = baham20, aes(x=id_num, y=score + 1, label=sub_category, hjust=hjust), color="black", fontface="bold", alpha=.8, size=2.2, angle= baham20$angle, inherit.aes = FALSE ) +
+  
+  labs(title = "Bahamas EEZ scores in 2020") 
+
+
 p
 ```
 
