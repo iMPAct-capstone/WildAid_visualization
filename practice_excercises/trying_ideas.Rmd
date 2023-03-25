@@ -254,12 +254,6 @@ ggplot(data = dat_1,
   labs(title = "Funding at Galapagos protected site")
 ```
 
-Try making a lollipop plot to show a years worth of category scores for a certain site
-
-
-This is a sample version that is highly customized to show the mean changing over time as well as vertain scores... not sure if it will be able to show our scores too easily 
-https://r-graph-gallery.com/web-lollipop-plot-with-R-the-office.html
-
 
 Example of circular bar chart: 
 ```{r}
@@ -391,5 +385,103 @@ p <- ggplot(data = baham20, aes(x = as.factor(id_num), y= score, fill=category))
 
 
 p
+
+### IDEA: COULD WRAP THIS IN SOME PLOTLY THING SO THE USER CAN HOVER OVER A BAR SEGMENT AND IT WILL DISPLAY THE SCORE!!!!! WOOOOOOO 
 ```
 
+
+
+Try making a lollipop plot to show a years worth of category scores for a certain site
+
+example from online: 
+```{r}
+# Create data (could be way easier but it's late)
+value1 <- abs(rnorm(6))*2
+don <- data.frame(
+  x=LETTERS[1:24], 
+  val=c( value1, value1+1+rnorm(6, 14,1) ,value1+1+rnorm(6, sd=1) ,value1+1+rnorm(6, 12, 1) ),
+  grp=rep(c("grp1", "grp2", "grp3", "grp4"), each=6)
+  ) %>%
+  arrange(val) %>%
+  mutate(x=factor(x, x))
+
+
+# With a bit more style
+ggplot(don) +
+  geom_segment( aes(x=x, xend=x, y=0, yend=val), color="grey") +
+  geom_point( aes(x=x, y=val, color=grp), size=3 ) +
+  coord_flip()+
+  theme_ipsum() +
+  theme(
+    legend.position = "none",
+    panel.border = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    strip.text.x = element_text(size = 8)
+  ) +
+  xlab("") +
+  ylab("Value of Y") +
+  facet_wrap(~grp, ncol=1, scale="free_y")
+```
+
+Ok now let's try it with our data: 
+```{r}
+# filter down to four or so sites that the user would like to compare category scores to each other 
+#---- hopefully the user can also select year of certain sites to compare against eachother??
+
+# let's use data from 2020 and bahamas eez, costa del ecuador, galapagos marine reserve, and national parcs
+# something weird is happening where I'm losing data 
+# title = comaring sites in ecuador 
+# filtering to the first 4 I see..
+lollidat <- MPS_tracker_data |> 
+  filter(year == "2022", 
+         country == "Ecuador")
+sub1 <- lollidat |> 
+  filter(site == "Reserva Ecológica Manglares Churute") |> 
+  group_by(category) |> 
+  summarise(score = mean(score, na.rm = TRUE), 
+            site = site)
+sub2 <- lollidat |> 
+  filter(site == "Galapagos Marine Reserve") |> 
+  group_by(category) |> 
+  summarise(score = mean(score, na.rm = TRUE), 
+            site = site)
+sub3 <- lollidat |> 
+  filter(site == "Parque Nacional Machalilla") |> 
+  group_by(category) |> 
+  summarise(score = mean(score, na.rm = TRUE), 
+            site = site)
+sub4 <- lollidat |> 
+  filter(site == "Refugio de Vida Silvestre Manglares El Morro") |> 
+  group_by(category) |> 
+  summarise(score = mean(score, na.rm = TRUE), 
+            site = site)
+lolli_cat_score <- bind_rows(sub1, sub2, sub3, sub4)
+
+         
+# make our grouped lollipop plot
+ggplot(lolli_cat_score) +
+  geom_segment( aes(x=category, xend=category, y=0, yend=score), color="grey") +
+  geom_point( aes(x=category, y=score, color=site), size=3 ) +
+  coord_flip()+
+  theme_ipsum() +
+  theme(
+    legend.position = "none",
+    panel.border = element_blank(),
+    panel.spacing = unit(0.1, "lines"),
+    strip.text.x = element_text(size = 8), 
+    axis.text.y = element_text(size = 7), 
+    plot.title = element_text(size = 12)
+  ) +
+  labs(title = "Comaring Four Sites in Ecuador in 2022", size = 1) +
+  xlab("Scoring Category") +
+  ylab("Score") +
+  facet_wrap(~site, ncol=1, scale="free_y")
+```
+
+
+
+This is a sample version that is highly customized to show the mean changing over time as well as vertain scores... not sure if it will be able to show our scores too easily 
+https://r-graph-gallery.com/web-lollipop-plot-with-R-the-office.html
+
+
+UP NEXT: SUNBURST AND LOLLIPOP
