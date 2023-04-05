@@ -1,0 +1,1 @@
+Here's where we are going to write some information about WildAid's mission (maybe include mission statement) and breifly describe the goal of this app....  or we could put that in another .md file

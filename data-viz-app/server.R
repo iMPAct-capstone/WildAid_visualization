@@ -1,6 +1,6 @@
 server <- function(input, output) {
 
-  # filter data ----
+  # pull map data from global file ----
   filtered_lakes <- reactive ({
 
     lake_data |>
@@ -11,7 +11,7 @@ server <- function(input, output) {
 
 
   # build leaflet map ----
-  output$lake_map <- renderLeaflet({
+  output$MPA_map <- renderLeaflet({
 
     leaflet() |>
 

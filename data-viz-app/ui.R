@@ -35,7 +35,9 @@ body <- dashboardBody(
                    # background info box ----
                    box(width = NULL,
 
-                       "background info here"
+                       title = tags$strong("background info here"),
+                       
+                       includeMarkdown("text/background.md")
 
                    ), # END background info box
 
