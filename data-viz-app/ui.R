@@ -39,7 +39,7 @@ body <- dashboardBody(
                        
                        includeMarkdown("text/background.md")
 
-                   ), # END background info box
+                   ) # END background info box
 
             ), # END left-hand column
 
@@ -52,7 +52,7 @@ body <- dashboardBody(
                      # data source box ----
                      box(width = NULL,
 
-                         "data citation here"
+                         title = tags$strong("data citation here")
 
                      ) # END data source box
 
@@ -64,7 +64,7 @@ body <- dashboardBody(
                      # disclaimer box ----
                      box(width = NULL,
 
-                         "disclaimer here"
+                         tags$strong("disclaimer here")
 
                      ) # END disclaimer box
 
@@ -83,14 +83,14 @@ body <- dashboardBody(
               # input box ----
               box(width = 4,
 
-                  "sliderInputs here"
+                  tags$strong("sliderInputs here")
 
               ), # END input box
 
               # leaflet box ----
               box(width = 8,
 
-                  "leaflet output here"
+                  tags$strong("leaflet output here")
 
               ) # END leaflet box
 
