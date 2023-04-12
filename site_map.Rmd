@@ -1,0 +1,68 @@
+---
+title: "WildAid Site Map"
+author: "Elise Gonzales"
+date: "2023-04-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load the required libraries
+```{r}
+library(leaflet)
+library(dplyr)
+library(googlesheets4)
+library(janitor)
+```
+
+# Read data from CSV file
+```{r}
+# Read in Data ---- 
+#url for site list 
+url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit?usp=sharing"
+
+sites <- read_sheet(url) |> 
+  clean_names() |> 
+  select(site, latitude, longitude)
+  
+```
+
+# Define your scoring scale and associated colors
+```{r}
+score_scale <- c(1, 2, 3, 4, 5)  # Example scoring scale
+color_palette <- colorRampPalette(c("#00A6A6", "#7FB069", "#094074", "#F4D067", "#E17000"))(n = length(score_scale) - 1)
+```
+
+
+# Create a function to map scores to colors
+```{r}
+score_to_color <- function(score) {
+  color_idx <- findInterval(score, score_scale, all.inside = TRUE)
+  return(color_palette[color_idx])
+}
+```
+
+
+# Create a leaflet map
+```{r}
+map <- leaflet(sites) %>%
+  addTiles() %>% # Add default tile layers
+   
+  addCircleMarkers(data = sites, 
+                   lat = ~latitude, 
+                   lng = ~longitude, 
+                   radius = 10, 
+                   color = ~score_to_color(score_scale),
+                    label = ~as.character(site),
+                   # Use the score_to_color function to map scores to colors,  Set label as site name
+                   fillOpacity = 0.8) %>%
+  setView(lng = -9.4919, lat = 30.6081, zoom = 1.5) # Set initial map view
+```
+# Print the map
+```{r}
+map
+```
+
+
