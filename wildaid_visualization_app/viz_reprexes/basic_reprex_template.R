@@ -1,10 +1,18 @@
 # global variables can go here: ----
 library(shiny)
-library(DT) 
-library(tidyverse) 
 library(dplyr) 
-library(googlesheets4) 
+library(tidyverse) 
+library(leaflet) 
+library(plotly) 
+library(ggplot2) 
 library(googledrive) 
+library(googlesheets4)
+library(radiant.data)
+library(DT)
+library(janitor)
+library(shinycssloaders)
+library(hrbrthemes)
+library(shinyWidgets)
 
 url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
 
