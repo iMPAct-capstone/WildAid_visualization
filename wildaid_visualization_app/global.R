@@ -12,7 +12,16 @@ library(janitor)
 library(shinycssloaders)
 library(hrbrthemes)
 library(shinyWidgets)
+#library(gargle) 
 
+# auto-authenticate google sheets ... this will have you interactively authenticate using broswer
+#options(gargle_oauth_cache = ".secrets/")
+
+##auto authenticate without browser
+gs4_auth(
+  cache = ".secrets",
+  email = "jaredpetry@ucsb.edu" # eventually want to change this to silvia's email 
+)
 # Read in our MPS data ----
 
 url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
