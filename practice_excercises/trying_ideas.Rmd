@@ -55,8 +55,11 @@ country_scores_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know
 
   
 ggplot(country_scores_no_na, aes(x = score, y = country, fill = country)) +
-  geom_density_ridges(scale = 1.2) +
-  theme_ridges() 
+  geom_density_ridges(jittered_points = TRUE,
+                      scale = 1.2, stat = "binline", bins = 5, binwidth = 1) +
+  theme_ridges() + 
+  scale_x_continuous(breaks = c(1,2,3,4,5)) +
+  theme(panel.spacing = unit(10, "lines"))
 ```
 
 ```{r}
