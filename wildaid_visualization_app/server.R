@@ -31,9 +31,6 @@ function(input, output, session) {
                   filter = 'top',
                   options = list(
                     pageLength = 10, autoWidth = TRUE,
-                    columnDefs = list(list(targets = 5, width = '80px'),
-                                      list(targets = 6, width = '400px'),
-                                      list(targets = 3, width = '10px')), # play with column widths
                     scrollX = TRUE
                   )))
   
