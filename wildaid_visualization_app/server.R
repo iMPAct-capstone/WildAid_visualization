@@ -16,6 +16,27 @@ function(input, output, session) {
                   )))
   #browser()
   
+  # DT summary datatable ----
+  output$summary_table <- DT::renderDataTable(
+    DT::datatable(
+      summary_table_cat <- MPS_tracker_data %>%
+        group_by(year, site, category) %>%
+        summarize(mean_score = round(mean(score), 1)) %>%
+        pivot_wider(names_from = category,
+                    values_from = c(mean_score),
+                    names_sep = " "), #finding mean of scores and displaying with categories as header
+                  rownames = FALSE,
+                  escape=TRUE, # don't understand what this does could be important
+                  caption = "Here is a summary table showing annual mean scores for each site.",
+                  filter = 'top',
+                  options = list(
+                    pageLength = 10, autoWidth = TRUE,
+                    columnDefs = list(list(targets = 5, width = '80px'),
+                                      list(targets = 6, width = '400px'),
+                                      list(targets = 3, width = '10px')), # play with column widths
+                    scrollX = TRUE
+                  )))
+  
   # LEAFLET MAP  ----
   
   # Define your scoring scale and associated colors
