@@ -62,7 +62,38 @@ dashboardPage(
                      # tab panels NOTE: theres an additional argument "value" that could be useful... look later
                      
                      
-                     tabPanel(title = "Compare category scores between MPA sites", icon = icon("question")
+                     tabPanel(title = "Compare category scores between MPA sites", icon = icon("square-poll-horizontal"),
+                              tags$h3("Select year and up to four sites accross which you would like to compare category scores."),
+                              tags$p("NOTE: If there is no output for what you selected, the data for the site and year you have selected does not exist. (See error below when this happens.)"),
+                              sidebarLayout(
+                                sidebarPanel(
+                                  selectInput("year_selection", 
+                                              label = h3("Select year"), 
+                                              choices = MPS_tracker_data$year, # having trouble making this appear in order
+                                              selected = 2022), # is this necessary?? don't think so let's try later
+                                  selectInput("site_1", 
+                                              label = h3("Select site 1"), 
+                                              choices = MPS_tracker_data$site, # having trouble making this appear in order
+                                              selected = "Reserva Ecológica Manglares Churute"),
+                                  selectInput("site_2",
+                                              label = h3("Select site 2"), 
+                                              choices = MPS_tracker_data$site, # having trouble making this appear in order
+                                              selected = "Galapagos Marine Reserve"),
+                                  selectInput("site_3",
+                                              label = h3("Select site 3"), 
+                                              choices = MPS_tracker_data$site, # having trouble making this appear in order
+                                              selected = "Parque Nacional Machalilla"),
+                                  selectInput("site_4",
+                                              label = h3("Select site 4"), 
+                                              choices = MPS_tracker_data$site, # having trouble making this appear in order
+                                              selected = "Refugio de Vida Silvestre Manglares El Morro")
+                                ),
+                                
+                                # Show a plot of the generated distribution
+                                mainPanel(
+                                  plotOutput("lolliPlot")
+                                )
+                              )
                      ),
                      
                      tabPanel(title = "Viz 2", icon = icon("question"), h4("(h4) tabpanel placeholder")),

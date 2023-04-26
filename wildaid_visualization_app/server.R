@@ -70,7 +70,38 @@ function(input, output, session) {
                 position = "bottomright")
   })
   
+  # LOLLIPOP PLOT ----
+  lollidat <- reactive({MPS_tracker_data |> 
+      filter(year %in% c(input$year_selection), # user picks year
+             site %in% c(input$site_1, # user picks sites
+                         input$site_2,
+                         input$site_3,
+                         input$site_4)) |> 
+      group_by(category, site) |> 
+      summarise(score = mean(score, na.rm = TRUE))
+  })
   
+  # make our grouped lollipop plot
+  
+  
+  output$lolliPlot <- renderPlot({
+    ggplot(lollidat()) +
+      geom_segment( aes(x=category, xend=category, y=0, yend=score), color="grey") +
+      geom_point( aes(x=category, y=score, color=site), size=3 ) +
+      coord_flip()+
+      theme_ipsum() +
+      theme(
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.spacing = unit(0.1, "lines"),
+        strip.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 7), 
+        plot.title = element_text(size = 12)
+      ) +
+      xlab("Scoring Category") +
+      ylab("Score") +
+      facet_wrap(~site, ncol=1, scale="free_y")
+  })
   
   
   

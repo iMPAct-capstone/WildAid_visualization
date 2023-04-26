@@ -39,7 +39,7 @@ ui <- fluidPage(
             selectInput("year_selection", 
                         label = h3("Select year"), 
                         choices = MPS_tracker_data$year, # having trouble making this appear in order
-                        selected = 1), # is this necessary?? don't think so let's try later
+                        selected = 2022), # is this necessary?? don't think so let's try later
             selectInput("site_1", 
                         label = h3("Select site 1"), 
                         choices = MPS_tracker_data$site, # having trouble making this appear in order
@@ -95,7 +95,6 @@ server <- function(input, output) {
           axis.text.y = element_text(size = 7), 
           plot.title = element_text(size = 12)
         ) +
-        labs(title = "Comparing Four Sites in Ecuador in 2022", size = 1) +
         xlab("Scoring Category") +
         ylab("Score") +
         facet_wrap(~site, ncol=1, scale="free_y")
