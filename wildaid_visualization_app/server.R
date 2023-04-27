@@ -71,7 +71,14 @@ function(input, output, session) {
   })
   
   # LOLLIPOP PLOT ----
-  lollidat <- reactive({MPS_tracker_data |> 
+  
+  # order the data by year
+  data_ordered <- MPS_tracker_data |>
+    arrange(year)
+  
+  # build reactive dataframe
+  lollidat <- reactive({data_ordered |> 
+      arrange(year) |> 
       filter(year %in% c(input$year_selection), # user picks year
              site %in% c(input$site_1, # user picks sites
                          input$site_2,

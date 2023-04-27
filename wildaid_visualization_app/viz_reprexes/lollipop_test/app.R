@@ -91,9 +91,9 @@ server <- function(input, output) {
           legend.position = "none",
           panel.border = element_blank(),
           panel.spacing = unit(0.1, "lines"),
-          strip.text.x = element_text(size = 8), 
-          axis.text.y = element_text(size = 7), 
-          plot.title = element_text(size = 12)
+          strip.text.x = element_text(size = 17), 
+          axis.text.y = element_text(size = 14), 
+          plot.title = element_text(size = 1)
         ) +
         xlab("Scoring Category") +
         ylab("Score") +
