@@ -24,5 +24,18 @@ MPS_tracker_data <- read_sheet(url) |>
   select(-indicator_type)
 
 # define the UI here: ----
+ui <- fluidPage(
+ 
+   
+)
 
 # define the server here: ----
+server <- function(input, output) {
+  
+  
+  
+}
+
+
+# Run the application ----
+shinyApp(ui = ui, server = server)
