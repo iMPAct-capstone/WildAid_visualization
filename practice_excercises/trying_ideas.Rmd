@@ -50,7 +50,7 @@ Now let's try that with our data
 
 # take out all rows that have "don't know or NA"
 country_scores_no_na <- MPS_tracker_data[!(MPS_tracker_data$score == "Don't know or N/A"), ] |> 
-  na.omit() |> 
+#  na.omit() |> 
   select(country, score)
 
   
