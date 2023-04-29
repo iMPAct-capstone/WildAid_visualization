@@ -34,7 +34,8 @@ MPS_tracker_data <- MPS_tracker_data |>
   mutate(year = as.factor(year),  # make sure changing these to factor doesn't harm any graphs
          category = as.factor(category), 
          country = as.factor(country)) |> 
-  select(-indicator_type) # take out indicator type because obsolete 
+  select(-indicator_type) |> # take out indicator type because obsolete 
+  arrange(year)
 
 
 # read in the map data ----

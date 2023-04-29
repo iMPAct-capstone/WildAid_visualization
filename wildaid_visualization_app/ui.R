@@ -59,7 +59,7 @@ dashboardPage(
       tabItem(tabName = "visualizations",
               # tab box
               tabBox(id = "tab_box3", width = 12, 
-                     # tab panels NOTE: theres an additional argument "value" that could be useful... look later
+                     # tab panels NOTE: there's an additional argument "value" that could be useful... look later
                      
                      
                      tabPanel(title = "Compare category scores between MPA sites", icon = icon("square-poll-horizontal"),
@@ -96,7 +96,34 @@ dashboardPage(
                               )
                      ),
                      
-                     tabPanel(title = "Viz 2", icon = icon("question"), h4("(h4) tabpanel placeholder")),
+                     tabPanel(title = "Category scores over time", icon = icon("chart-line"), 
+                              # title text 
+                              tags$h2("Visualize category scores changing over time"),
+                              # paragraph text 
+                              tags$p("Please select a site and a scoring metric category. If the plot is blank, this means there is no combination of your selections present in the data at this time. Some sites from previous years may have been renamed or new sites have been created so certain sites may not have enough data points for this plot to be relevant."),
+                              br(),
+                              br(),
+                              # add a side bar
+                              sidebarLayout(
+                                # add stuff to the sidebar 
+                                sidebarPanel(
+                                  # add an input widget for site
+                                  selectInput(inputId = "site_select", label = h4("Select site"), 
+                                              choices = unique(MPS_tracker_data$site), 
+                                              selected = c("Pemba Channel Conservation Area"),
+                                              selectize = FALSE),
+                                  # another one for category
+                                  selectInput(inputId = "category_select", label = h4("Select scoring category"), 
+                                              choices = unique(MPS_tracker_data$category), 
+                                              selected = "Fishing Sector Collaboration", 
+                                              selectize = FALSE)
+                                ),
+                                
+                                # if you have a sidebar panel, you also need a main panel (within sidebar layout function)
+                                mainPanel(
+                                  plotOutput("linegraph"))
+                                )
+                              ),
                      tabPanel(title = "Viz 3", icon = icon("question"), h4("(h4) tabpanel placeholder")))
       ) # end viz tab
       
