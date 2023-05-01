@@ -3,9 +3,11 @@ library(shinydashboard)
 
 # Dashboard Page ----
 dashboardPage(
-  
+  # # Dashboard Theme/Skin ----
+  skin = "black",
   # Dashboard Header ----  
-  dashboardHeader(title = "WildAid Marine MPS Tracker Data Explorer", # main site title
+  dashboardHeader(title = span("WildAid Marine MPS Tracker Data Explorer", # main site title
+        style = "color: #094074; font-size: 28px; font-family: 'Impact'"),
                   titleWidth = 400, # how big you want the title
                   tags$li(class = "dropdown", 
                           tags$a(href = "https://marine.wildaid.org/", 
@@ -34,6 +36,13 @@ dashboardPage(
   
   # Dashboard Body ----
   dashboardBody(
+    
+    # link stylesheet
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
+    ),
+    
+    # tabItems ----
     tabItems(
       
       # Welcome tab ----
@@ -41,7 +50,10 @@ dashboardPage(
               #tab box 
               tabBox(id = "tab_box1", width = 12, 
                      # tab panels
-                     tabPanel(title = "About", icon = icon("address-card"), h4("(h4) tabpanel placeholder")),
+                     tabPanel(title = "About", icon = icon("address-card"), 
+                              h4(includeMarkdown("text/mission.md")),
+                              h4(includeMarkdown("text/about_app.md"))
+                     ),
                      tabPanel(title = "Map", icon = icon("map"), leafletOutput(outputId = "MPA_map")))
       ), # end welcome tab
       
@@ -50,7 +62,7 @@ dashboardPage(
               #tab box 
               tabBox(id = "tab_box2", width = 12, 
                      # tab panels
-                     tabPanel(title = "Data About", icon = icon("bookmark"), h1("(h1) tabpanel placeholder")),
+                     tabPanel(title = "About", icon = icon("bookmark"), h1("(h1) tabpanel placeholder")),
                      tabPanel(title = "Explore Data", icon = icon("magnifying-glass"), DTOutput("dt_table")),
                      tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) # NOTE: maybe add length on the 
       ), # end data tab
@@ -130,3 +142,6 @@ dashboardPage(
     ) # end Tab ItemSSS 
   ) # end Dashboard body
 ) # end Dashboard Page
+
+
+  
