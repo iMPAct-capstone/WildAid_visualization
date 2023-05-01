@@ -62,7 +62,8 @@ dashboardPage(
               #tab box 
               tabBox(id = "tab_box2", width = 12, 
                      # tab panels
-                     tabPanel(title = "About", icon = icon("bookmark"), h1("(h1) tabpanel placeholder")),
+                     tabPanel(title = "About", icon = icon("address-card"), 
+                              h1(includeMarkdown("text/about_data.md"))),
                      tabPanel(title = "Explore Data", icon = icon("magnifying-glass"), DTOutput("dt_table")),
                      tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) # NOTE: maybe add length on the 
       ), # end data tab
