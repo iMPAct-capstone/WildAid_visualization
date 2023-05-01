@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Karma&family=Prompt:wght@200&display=swap");
+body {
+  background-color: white;
+
+}
+
+body, h1, h2, h3, h4 {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px
+}
+
+.logo {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px
+}
+
+title {
+  font-family: 'Impact';
+  font-size: 28px;
+}
+
+p {
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+a {
+  color: #E59C5E;
+}
+
+.navbar-default:hover {
+    color: #F2E836;
+    background-color: #000000 !important;
+}
+
+.btn.default.active {
+  background-color: #8ca376;
+}

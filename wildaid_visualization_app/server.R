@@ -64,7 +64,7 @@ function(input, output, session) {
                                       "Country: ", sites_w_color$country, "<br>",
                                       "Partners: ", sites_w_color$partners, "<br>",
                                       "Site Manager(s): ", sites_w_color$p_ms, "<br>", 
-                                      "Implimentation Status: ", sites_w_color$status)) |> 
+                                      "Implementation Status: ", sites_w_color$status)) |> 
       addLegend(colors = color_palette,
                 labels = status_word,
                 position = "bottomright")
