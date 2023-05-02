@@ -20,22 +20,22 @@ dashboardPage(
   ), # end dashboard header
   
   # Dashboard Sidebar ----
-  dashboardSidebar(
-    
-    # Sidebar Menu ----
-    sidebarMenu(
-      id = "sidebar", 
-      
-      # Menu Items
-      menuItem(text = "Welcome", tabName = "welcome", icon = icon("hand-peace")), 
-      menuItem(text = "Data", tabName = "data", icon = icon("table")), 
-      menuItem(text = "Visualizations", tabName = "visualizations", icon = icon("chart-simple"))
-      
-    ) # end Sidebar menu(items)
-  ), # end sidebar
+  
+  # dashboard sidebar ----------------------
+  sidebar <- dashboardSidebar(
+    collapsed = TRUE, sidebarMenuOutput("sidebar")
+  ), # END Dashboard sidebar
+  
   
   # Dashboard Body ----
   dashboardBody(
+    
+    #LOGIN STUFF
+    div(class = "pull-right", shinyauthr::logoutUI(id = "logout")),
+    # add login panel UI function
+    shinyauthr::loginUI(id = "login"),
+    # setup table output to show user info after login
+    tableOutput("user_table"),
     
     # link stylesheet
     tags$head(
@@ -64,7 +64,10 @@ dashboardPage(
                      # tab panels
                      tabPanel(title = "About", icon = icon("address-card"), 
                               h1(includeMarkdown("text/about_data.md"))),
-                     tabPanel(title = "Explore Data", icon = icon("magnifying-glass"), DTOutput("dt_table")),
+                     # explore all the data here 
+                     tabPanel(title = "Explore Data", icon = icon("magnifying-glass"), 
+                              DTOutput("dt_table")),
+                     # summary table here 
                      tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) # NOTE: maybe add length on the 
       ), # end data tab
       

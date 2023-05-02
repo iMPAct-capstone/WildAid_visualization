@@ -1,19 +1,66 @@
 function(input, output, session) {
   
+  # LOGIN 
+  credentials <- shinyauthr::loginServer(
+    id = "login",
+    data = user_base,
+    user_col = user,
+    pwd_col = password,
+    log_out = reactive(logout_init()),
+    reload_on_logout = TRUE
+  )
+  
+  # call the logout module with reactive trigger to hide/show
+  logout_init <- shinyauthr::logoutServer(
+    id = "logout",
+    active = reactive(credentials()$user_auth)
+  )
+  
+  # this opens or closes the sidebar on login/logout
+  observe({
+    if (credentials()$user_auth) {
+      shinyjs::removeClass(selector = "body", class = "sidebar-collapse")
+    } else {
+      shinyjs::addClass(selector = "body", class = "sidebar-collapse")
+    }
+  })
+  
+  # only when credentials()$user_auth is TRUE, render your desired sidebar menu
+  output$sidebar <- renderMenu({
+    req(credentials()$user_auth)
+    
+    # render menu if authorized
+    sidebarMenu(
+          id = "sidebar",
+
+          # Menu Items
+          menuItem(text = "Welcome", tabName = "welcome", icon = icon("hand-peace")),
+          menuItem(text = "Data", tabName = "data", icon = icon("table")),
+          menuItem(text = "Visualizations", tabName = "visualizations", icon = icon("chart-simple"))
+
+        ) # end Sidebar menu(items)
+       # end sidebar
+  })
+  
   # DT datatable ----
   output$dt_table <- DT::renderDataTable(
     DT::datatable(data = select(MPS_tracker_data, -visualization_include), # take out a column
                   rownames = FALSE,
                   escape=TRUE, # don't understand what this does could be important
-                  caption = "Here is a filter-able compilation of all of our data", 
-                  filter = 'top',
+                  caption = "Here is a filter-able compilation of all of our data. Please scroll to the right to view comments and the site managers who entered each observation", 
+                  filter = 'top', 
+                  extensions = "Responsive",  
                   options = list(
-                    pageLength = 10, autoWidth = TRUE,
+                    responsive = TRUE,
+                    pageLength = 10, 
+                    autoWidth = TRUE,
+                    scrollCollapse = TRUE,
+                    scroller = TRUE,
                     columnDefs = list(list(targets = 5, width = '80px'), 
-                                      list(targets = 6, width = '400px'), 
-                                      list(targets = 3, width = '10px')), # play with column widths
+                                      list(targets = 6, width = '1000px'), 
+                                      list(targets = 3, width = '1px')), # play with column widths
                     scrollX = TRUE
-                  )))
+                  ) ) |> DT::formatStyle(columns = c(1, 2, 3, 4, 5, 6, 7, 8), fontSize = '70%')) 
   #browser()
   
   # DT summary datatable ----
@@ -21,7 +68,7 @@ function(input, output, session) {
     DT::datatable(
       summary_table_cat <- MPS_tracker_data %>%
         group_by(year, site, category) %>%
-        summarize(mean_score = round(mean(score), 1)) %>%
+        summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
         pivot_wider(names_from = category,
                     values_from = c(mean_score),
                     names_sep = " "), #finding mean of scores and displaying with categories as header
