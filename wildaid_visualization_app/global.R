@@ -14,16 +14,20 @@ library(hrbrthemes)
 library(shinyWidgets)
 library(sass)
 library(shiny)
-#library(gargle) 
+library(lubridate)
+library(scales)
+library(ggridges)
+library(viridis)
+library(gargle)
+library(rsconnect)
 
-# auto-authenticate google sheets ... this will have you interactively authenticate using broswer
-#options(gargle_oauth_cache = ".secrets/")
+# auto-authenticate google sheets ... this will have you interactively authenticate using browser the first time and then after that, you are good to go!
 
-##auto authenticate without browser
-gs4_auth(
-  cache = ".secrets",
-  email = "jaredpetry@ucsb.edu" # eventually want to change this to silvia's email 
-)
+options(gargle_oauth_cache = ".secrets")
+drive_auth(cache = ".secrets", email = "jaredpetry@ucsb.edu")
+gs4_auth(token = drive_token())
+
+
 # Read in our MPS data ----
 
 url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
@@ -49,4 +53,11 @@ map_data <- read_sheet(map_url) |>
   separate(status, into = c("status_numb", "status_key"), sep = " - ", remove = FALSE) |> 
   mutate(status_numb = as.numeric(status_numb)) |> 
   filter(active_site == "current")
+
+# mean_data for faceted histogram
+mean_data <- MPS_tracker_data |> 
+  select(country, score) |> 
+  na.omit() |> 
+  group_by(country) |> 
+  summarise(mean_score = mean(score))
 

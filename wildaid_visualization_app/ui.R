@@ -79,7 +79,7 @@ dashboardPage(
                               tags$h3("Select year and up to four sites accross which you would like to compare category scores."),
                               tags$p("NOTE: If there is no output for what you selected, the data for the site and year you have selected does not exist. (See error below when this happens.)"),
                               sidebarLayout(
-                                sidebarPanel(
+                                sidebarPanel(width = 3,
                                   selectInput("year_selection", 
                                               label = h3("Select year"), 
                                               choices = unique(MPS_tracker_data$year), # having trouble making this appear in order
@@ -109,7 +109,7 @@ dashboardPage(
                                 
                                 # Show a plot of the generated distribution
                                 mainPanel(
-                                  plotOutput("lolliPlot")
+                                  plotOutput("lolliPlot", width = 800, height = 600)
                                 )
                               )
                      ),
@@ -142,7 +142,15 @@ dashboardPage(
                                   plotOutput("linegraph"))
                                 )
                               ),
-                     tabPanel(title = "Viz 3", icon = icon("question"), h4("(h4) tabpanel placeholder")))
+                     tabPanel(title = "Compare Score by Country", icon = icon("earth"),
+                              br(),
+                              h2("Distributions of scores for the countries that WildAid Marine works with"),
+                              p("Here are the density historgrams depicting the current scores at each of the countries where WildAid helps facilitate their marine protection enforcement. The vertical line shows the mean score across the entire country."),
+                              br(),
+                              br(),
+                              mainPanel(
+                                plotOutput("facet_hist", height = 500, width = 900))
+                     ))
       ) # end viz tab
       
     ) # end Tab ItemSSS 

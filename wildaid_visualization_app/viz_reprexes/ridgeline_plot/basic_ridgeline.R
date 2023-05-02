@@ -15,6 +15,7 @@ library(shinyWidgets)
 library(lubridate)
 library(scales)
 library(ggridges)
+library(viridis)
 
 url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
 
@@ -48,17 +49,31 @@ ridgeplot <- MPS_tracker_data |>
 ridgeplot
 
 # ok lets try a simple histogram faceted by country so we can do fancier stuff
+
+# create a little dataframe with the mean score of each so we can place the vertical lines over the histograms 
+mean_data <- MPS_tracker_data |> 
+  select(country, score) |> 
+  na.omit() |> 
+  group_by(country) |> 
+  summarise(mean_score = mean(score))
+
 facet_hist <- MPS_tracker_data |> 
   select(country, score) |> 
   na.omit() |> 
   ggplot(aes(x = score, fill = country)) + 
   geom_histogram(aes(y = ..density..), 
                  binwidth = 1, bins = 5) + 
-  geom_vline(aes(xintercept = mean(score))) +
+  geom_vline(data = mean_data, aes(xintercept = mean_score), color = "black",alpha = 0.3) +
   facet_wrap(~country, ncol = 2, scales = 'free') + 
   scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
   scale_y_continuous(limits = c(0,0.6)) +
   theme_bw() + 
-  theme(legend.position = "none") 
+  theme(legend.position = "none") + 
+  scale_fill_brewer(palette = "Set2", alpha = 0.2)
 
 facet_hist
+
+# best options so far for color pallete
+# brewer set 2
+# ipsum
+

@@ -39,23 +39,28 @@ ui <- fluidPage(
             selectInput("year_selection", 
                         label = h3("Select year"), 
                         choices = MPS_tracker_data$year, # having trouble making this appear in order
-                        selected = 2022), # is this necessary?? don't think so let's try later
+                        selected = c(2022),
+                        selectize = FALSE), # is this necessary?? don't think so let's try later
             selectInput("site_1", 
                         label = h3("Select site 1"), 
                         choices = MPS_tracker_data$site, # having trouble making this appear in order
-                        selected = "Reserva Ecológica Manglares Churute"),
+                        selected = c("Reserva Ecológica Manglares Churute"),
+                        selectize = FALSE),
             selectInput("site_2",
                         label = h3("Select site 2"), 
                         choices = MPS_tracker_data$site, # having trouble making this appear in order
-                        selected = "Galapagos Marine Reserve"),
+                        selected = c("Galapagos Marine Reserve"),
+                        selectize = FALSE),
             selectInput("site_3",
                         label = h3("Select site 3"), 
                         choices = MPS_tracker_data$site, # having trouble making this appear in order
-                        selected = "Parque Nacional Machalilla"),
+                        selected = c("Parque Nacional Machalilla"),
+                        selectize = FALSE),
             selectInput("site_4",
                         label = h3("Select site 4"), 
                         choices = MPS_tracker_data$site, # having trouble making this appear in order
-                        selected = "Refugio de Vida Silvestre Manglares El Morro")
+                        selected = c("Refugio de Vida Silvestre Manglares El Morro"),
+                        selectize = FALSE)
         ),
 
         # Show a plot of the generated distribution

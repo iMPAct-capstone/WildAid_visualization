@@ -93,7 +93,7 @@ function(input, output, session) {
   
   output$lolliPlot <- renderPlot({
     ggplot(lollidat()) +
-      geom_segment( aes(x=category, xend=category, y=0, yend=score), color="grey") +
+      geom_segment( aes(x=category, xend=category, y=1, yend=score), color="grey") +
       geom_point( aes(x=category, y=score, color=site), size=3 ) +
       coord_flip()+
       theme_ipsum() +
@@ -101,10 +101,17 @@ function(input, output, session) {
         legend.position = "none",
         panel.border = element_blank(),
         panel.spacing = unit(0.1, "lines"),
-        strip.text.x = element_text(size = 8), 
-        axis.text.y = element_text(size = 7), 
-        plot.title = element_text(size = 12)
+        strip.text.x = element_text(size = 15), 
+        axis.text.y = element_text(size = 15), 
+        plot.title = element_text(size = 15),
+        axis.title.x = element_text(hjust = 0.5,
+                                    margin = margin(r = 50),
+                                    size = 12),
+        axis.title.y = element_text(hjust = 0.5,
+                                    margin = margin(r = 30),
+                                    size = 12)
       ) +
+      scale_y_continuous(limits = c(1, 5)) +
       xlab("Scoring Category") +
       ylab("Score") +
       facet_wrap(~site, ncol=1, scale="free_y")
@@ -150,4 +157,25 @@ function(input, output, session) {
       labs(title = paste0(input$category_select," at ", input$site_select, " protected site"))
   })
   
+  # FACETED HISTOGRAM SCORE BY COUNTRY GRAPH
+  output$facet_hist <- renderPlot({
+    MPS_tracker_data |> 
+    select(country, score) |> 
+    na.omit() |> 
+    ggplot(aes(x = score, fill = country)) + 
+    geom_histogram(aes(y = ..density..), 
+                   binwidth = 1, bins = 5) + 
+    geom_vline(data = mean_data, aes(xintercept = mean_score), color = "black",alpha = 0.3) +
+    facet_wrap(~country, ncol = 3, scales = 'free') + 
+    scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
+    scale_y_continuous(limits = c(0,0.6)) +
+    theme_bw() + 
+    theme(legend.position = "none",
+          axis.title.x = element_text(size = 14, hjust = 0.5),
+          axis.title.y = element_text(size = 14, hjust = 0.5,
+                                      margin = margin(r = 20))) + 
+    scale_fill_brewer(palette = "Set2") +
+    labs(title = "Score Density by Country") 
+    
+  })
 }
