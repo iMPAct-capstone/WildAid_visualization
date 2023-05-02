@@ -1,0 +1,13 @@
+name: wildaid_visualization_app
+title: wildaid_visualization_app
+username:
+account: jaredpetry
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9013631
+bundleId: 7166070
+url: https://jaredpetry.shinyapps.io/wildaid_visualization_app/
+when: 1683068016.5601
+lastSyncTime: 1683068016.56011
+asMultiple: FALSE
+asStatic: FALSE
