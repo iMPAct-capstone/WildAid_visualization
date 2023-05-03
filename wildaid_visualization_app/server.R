@@ -1,5 +1,8 @@
 function(input, output, session) {
   
+  # try fixing that super weird character in lollipop plot with this
+  options(encoding = "UTF-8") # did not work
+  
   # LOGIN 
   credentials <- shinyauthr::loginServer(
     id = "login",
@@ -154,18 +157,24 @@ function(input, output, session) {
       coord_flip()+
       theme_ipsum() +
       theme(
+        text = element_text(family = "Arial"),
         legend.position = "none",
         panel.border = element_blank(),
         panel.spacing = unit(0.1, "lines"),
-        strip.text.x = element_text(size = 15), 
-        axis.text.y = element_text(size = 15), 
-        plot.title = element_text(size = 15),
+        strip.text.x = element_text(size = 15,
+                                    family = "Arial"), 
+        axis.text.y = element_text(size = 15,
+                                   family = "Arial"), 
+        plot.title = element_text(size = 15,
+                                  family = "Arial"),
         axis.title.x = element_text(hjust = 0.5,
                                     margin = margin(r = 50),
-                                    size = 12),
+                                    size = 12,
+                                    family = "Arial"),
         axis.title.y = element_text(hjust = 0.5,
                                     margin = margin(r = 30),
-                                    size = 12)
+                                    size = 12,
+                                    family = "Arial")
       ) +
       scale_y_continuous(limits = c(1, 5)) +
       xlab("Scoring Category") +

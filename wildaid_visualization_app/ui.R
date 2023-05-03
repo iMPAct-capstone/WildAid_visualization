@@ -65,10 +65,12 @@ dashboardPage(
                      tabPanel(title = "About", icon = icon("address-card"), 
                               h1(includeMarkdown("text/about_data.md"))),
                      # explore all the data here 
-                     tabPanel(title = "Explore Data", icon = icon("magnifying-glass"), 
+                     tabPanel(title = "Explore Data", icon = icon("magnifying-glass"),
+                              tags$h4("Scroll through all of our enforcement data and use the filters above each column to subset the data to what you would like to see. Note: to see all of the notes in the comments section, hover the mouse over the text."),
                               DTOutput("dt_table")),
                      # summary table here 
-                     tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) # NOTE: maybe add length on the 
+                     tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) 
+              
       ), # end data tab
       
       # Visualization tab ----
