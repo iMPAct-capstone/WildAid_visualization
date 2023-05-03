@@ -14,9 +14,9 @@ dashboardPage(
                                  icon("fish"), # here I just put a fish icon for the wildaid marine website 
                                  "WildAid Marine")), 
                   tags$li(class = "dropdown", 
-                          tags$a(href = "https://github.com/iMPAct-capstone/WildAid_visualization", 
-                                 icon("github-alt"), # github link 
-                                 "Github"))
+                          tags$a(#href = "https://github.com/iMPAct-capstone/WildAid_visualization", 
+                                 icon("circle-info"), # add link to user manual later 
+                                 "Help"))
   ), # end dashboard header
   
   # Dashboard Sidebar ----
