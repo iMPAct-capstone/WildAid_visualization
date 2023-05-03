@@ -60,18 +60,10 @@ function(input, output, session) {
                     scrollCollapse = TRUE,
                     scroller = TRUE,
                     columnDefs = list(list(targets = 5, width = '80px'), 
-                                      list(targets = 6, width = '80px'), 
-                                      list(targets = 3, width = '1px'),# play with column widths
-                                      list(targets = "comments", render = JS(
-                                        "function(data, type, row, meta) {",
-                                        "return type === 'display' && data.length > 50 ?",
-                                        "'<span title=\"' + data + '\">' + data.substr(0, 50) + '...</span>' : data;",
-                                        "}")
-                                      ))
-                      ,
-                  scrollX = TRUE
-                  ))
- |> DT::formatStyle(columns = c(1, 2, 3, 4, 5, 6, 7, 8), fontSize = '70%')) 
+                                      list(targets = 6, width = '1000px'), 
+                                      list(targets = 3, width = '1px')), # play with column widths
+                    scrollX = TRUE
+                  ) ) |> DT::formatStyle(columns = c(1, 2, 3, 4, 5, 6, 7, 8), fontSize = '70%')) 
   #browser()
   
   # DT summary datatable ----
@@ -90,8 +82,7 @@ function(input, output, session) {
                   options = list(
                     pageLength = 10, autoWidth = TRUE,
                     scrollX = TRUE
-                  ))
-    |> DT::formatStyle(columns = c(1, 2, 3, 4, 5, 6, 7, 8), fontSize = '70%'))
+                  )))
   
   # LEAFLET MAP  ----
   
