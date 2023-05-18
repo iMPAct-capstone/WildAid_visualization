@@ -3,6 +3,10 @@ library(shinydashboard)
 
 # Dashboard Page ----
 dashboardPage(
+  
+  # set title of webpage
+  title = "Marine Protection Data Visualization Tool",
+  
   # # Dashboard Theme/Skin ----
   skin = "black",
   # Dashboard Header ----  
