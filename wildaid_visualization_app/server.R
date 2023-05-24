@@ -188,6 +188,7 @@ function(input, output, session) {
     # )
     # 
     MPS_tracker_data |> 
+      filter(visualization_include == "yes")
       group_by(category, site, year) |> 
       summarise(score = round(mean(score, na.rm = TRUE), 2)) |> 
       filter(site %in% c(input$site_select), # could add multiple in future here
