@@ -124,6 +124,7 @@ function(input, output, session) {
   
   # order the data by year
   data_ordered <- MPS_tracker_data |>
+    filter(visualization_include == "yes") |> 
     arrange(year)
   
   # build reactive dataframe
