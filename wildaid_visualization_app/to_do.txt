@@ -1,0 +1,20 @@
+Here's all that we have to do to complete the visualization application
+**priority level in parenthesis
+
+- explore data table is not working! fix imediately
+**i think this has something to do with the visualization include column
+- there are errors with the graphs. We need to maybe change these to messages instead.  Are these errors caused because the data is not there? Or is it something else
+- make it pretty.  We need some pictures and we need to finalize all the text that is in there (high priority)
+- see if you can turn off the blue highlighting in the DT tables.  OR see how easy it is to make the export button work (very low)
+- add new sites to the map (pretty low, would look good in presentation) also silvia could theoretically do this herself
+- add documentation to the help button (must be done before public presentation)
+- make sure the data ingested into the visualizations are filtered with the "visualization_include" parameter. (high) AND also set the "visualization_include" to "no" for the community benefits category
+- add average score column in summary table (high)
+- add a country summary table with an average column as well (high)
+- add percent change summary table for the sites accross the years (medium? this seems hard)
+- add either static numbers for scores on the lollipop plot or wrap it with plotly so the user can hover and see the scores exact number (medium) 
+- create lollipop plot but for countries instead of sites (medium)
+- include another lollipop plot for percent change instead of scores (medium)
+- change histogram plots to user input select which country they would like to see.  Potentially would be good to view 2-3 at the same time (maybe 4 so it would be a quadrant) this is because as they keep adding new countries it will get way overcrowded. Also let the user toggle between years... right now the graphs show all the data over all the years data was collected
+
+
