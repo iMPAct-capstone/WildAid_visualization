@@ -9,6 +9,7 @@ Here's all that we have to do to complete the visualization application
 - add new sites to the map (pretty low, would look good in presentation) also silvia could theoretically do this herself
 - add documentation to the help button (must be done before public presentation)
 - make sure the data ingested into the visualizations are filtered with the "visualization_include" parameter. (high) AND also set the "visualization_include" to "no" for the community benefits category
+AND let sivlia know about (more importantly - put in the technical documentation) the site_active = "current" function in the "map_data" google sheet.  Should we change this to 'visualization_iclude' also? 
 - add average score column in summary table (high)
 - add a country summary table with an average column as well (high)
 - add percent change summary table for the sites accross the years (medium? this seems hard)

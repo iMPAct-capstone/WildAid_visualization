@@ -1,9 +1,6 @@
 function(input, output, session) {
   
-  # try fixing that super weird character in lollipop plot with this
-  options(encoding = "UTF-8") # did not work
-  
-  # LOGIN 
+  # LOGIN  ----
   credentials <- shinyauthr::loginServer(
     id = "login",
     data = user_base,
@@ -47,7 +44,9 @@ function(input, output, session) {
   
   # DT datatable ----
   output$dt_table <- DT::renderDataTable(
-    DT::datatable(data = select(MPS_tracker_data, -visualization_include), # take out a column
+    DT::datatable(data = MPS_tracker_data |> 
+                    filter(visualization_include == "yes") |> 
+                    select(-visualization_include), # take out a column
                   rownames = FALSE,
                   escape=TRUE, # don't understand what this does could be important
                   caption = "Here is a filter-able compilation of all of our data. Please scroll to the right to view comments and the site managers who entered each observation", 
@@ -70,6 +69,7 @@ function(input, output, session) {
   output$summary_table <- DT::renderDataTable(
     DT::datatable(
       summary_table_cat <- MPS_tracker_data %>%
+        filter(visualization_include == "yes") %>%
         group_by(year, site, category) %>%
         summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
         pivot_wider(names_from = category,
