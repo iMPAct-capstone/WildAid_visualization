@@ -48,6 +48,7 @@ function(input, output, session) {
                     filter(visualization_include == "yes") |> 
                     select(-visualization_include), # take out a column
                   rownames = FALSE,
+                  selection = "none",
                   escape=TRUE, # don't understand what this does could be important
                   caption = "Here is a filter-able compilation of all of our data. Please scroll to the right to view comments and the site managers who entered each observation", 
                   filter = 'top', 
@@ -76,6 +77,7 @@ function(input, output, session) {
                     values_from = c(mean_score),
                     names_sep = " "), #finding mean of scores and displaying with categories as header
                   rownames = FALSE,
+                  selection = "none",
                   escape=TRUE, # don't understand what this does could be important
                   caption = "Here is a summary table showing annual mean scores for each site.",
                   filter = 'top',
@@ -188,7 +190,7 @@ function(input, output, session) {
     # )
     # 
     MPS_tracker_data |> 
-      filter(visualization_include == "yes")
+      filter(visualization_include == "yes") |> 
       group_by(category, site, year) |> 
       summarise(score = round(mean(score, na.rm = TRUE), 2)) |> 
       filter(site %in% c(input$site_select), # could add multiple in future here
