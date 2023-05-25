@@ -46,7 +46,8 @@ function(input, output, session) {
   output$dt_table <- DT::renderDataTable(
     DT::datatable(data = MPS_tracker_data |> 
                     filter(visualization_include == "yes") |> 
-                    select(-visualization_include), # take out a column
+                    select(-visualization_include) |>  # take out a column
+                    droplevels(),
                   rownames = FALSE,
                   selection = "none",
                   escape=TRUE, # don't understand what this does could be important
