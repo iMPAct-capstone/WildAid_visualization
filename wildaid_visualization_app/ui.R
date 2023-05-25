@@ -10,7 +10,9 @@ dashboardPage(
   # # Dashboard Theme/Skin ----
   skin = "black",
   # Dashboard Header ----  
-  dashboardHeader(title = span("WildAid Marine MPS Tracker Data Explorer", # main site title
+  dashboardHeader(title = span(
+        tags$img(src = "logo.png", height = "30px"),
+        "WildAid Marine MPS Tracker Data Explorer", # main site title
         style = "color: #094074; font-size: 28px; font-family: 'Impact'"),
                   titleWidth = 400, # how big you want the title
                   tags$li(class = "dropdown", 
@@ -72,7 +74,7 @@ dashboardPage(
                                     ) # end column
                      ) # end fluid row
                      ), # end tab panel
-                     tabPanel(title = "Map", icon = icon("map"), leafletOutput(outputId = "MPA_map")))
+                     tabPanel(title = "Site Map", icon = icon("map"), leafletOutput(outputId = "MPA_map")))
       ), # end welcome tab
       
       # Data tab ----
