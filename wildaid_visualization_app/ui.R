@@ -54,10 +54,24 @@ dashboardPage(
               #tab box 
               tabBox(id = "tab_box1", width = 12, 
                      # tab panels
-                     tabPanel(title = "About", icon = icon("address-card"), 
-                              h4(includeMarkdown("text/mission.md")),
-                              h4(includeMarkdown("text/about_app.md"))
-                     ),
+                     tabPanel(title = "About", icon = icon("address-card"),
+                              fluidRow(
+                                  column(6,
+                                    tags$h2(style = "font-size: 24px;",
+                                            "Our Mission"),  
+                                    tags$p(style = "font-size: 16px;",
+                                           includeMarkdown("text/mission.md")),
+                                    h2(style = "font-size: 24px;",
+                                       "About this App"),
+                                    p(style = "font-size: 16px;",
+                                       includeMarkdown("text/about_app.md"))
+                                    ), # end column
+                                  column(6,
+                                    tags$img(src = "collage.png", 
+                                             style = "max-width: 100%;",)
+                                    ) # end column
+                     ) # end fluid row
+                     ), # end tab panel
                      tabPanel(title = "Map", icon = icon("map"), leafletOutput(outputId = "MPA_map")))
       ), # end welcome tab
       
