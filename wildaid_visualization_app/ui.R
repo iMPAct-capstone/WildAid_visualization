@@ -70,7 +70,7 @@ dashboardPage(
                                     ), # end column
                                   column(6,
                                     tags$img(src = "collage.png", 
-                                             style = "max-width: 100%;",)
+                                             style = "max-width: 100%;")
                                     ) # end column
                      ) # end fluid row
                      ), # end tab panel
@@ -82,8 +82,18 @@ dashboardPage(
               #tab box 
               tabBox(id = "tab_box2", width = 12, 
                      # tab panels
-                     tabPanel(title = "About", icon = icon("address-card"), 
-                              h1(includeMarkdown("text/about_data.md"))),
+                     tabPanel(title = "About", icon = icon("address-card"),
+                              fluidRow(
+                                column(6,
+                                      tags$h2(style = "font-size: 24px;",
+                                      "Our Data"),
+                                      p(style = "font-size: 16px;",
+                                      includeMarkdown("text/about_data.md"))),
+                                column(6,
+                                       tags$img(src = "categories.png",
+                                                style = "max-width: 100%;"))
+                              ) # end fluid row
+                              ), # end tab panel
                      # explore all the data here 
                      tabPanel(title = "Explore Data", icon = icon("magnifying-glass"),
                               tags$h4("Scroll through all of our enforcement data and use the filters above each column to subset the data to what you would like to see. Note: to see all of the notes in the comments section, hover the mouse over the text."),
