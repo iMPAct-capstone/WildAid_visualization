@@ -54,6 +54,10 @@ MPS_tracker_data <- MPS_tracker_data |>
   select(-indicator_type) |> # take out indicator type because obsolete 
   arrange(year)
 
+# order the data by year (for some plots)
+data_ordered <- MPS_tracker_data |>
+  filter(visualization_include == "yes") |>
+  arrange(year)
 
 # read in the map data ----
 map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit?usp=sharing"

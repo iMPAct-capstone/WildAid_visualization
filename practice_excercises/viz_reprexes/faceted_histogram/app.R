@@ -36,7 +36,7 @@ ui <- fluidPage(
   titlePanel("Histogram Visualization"),
   sidebarLayout(
     sidebarPanel(
-      selectInput("country_select", "Select Country:", choices = unique(MPS_tracker_data$country)),
+      selectInput("country_select", "Select Country:", choices = unique(data_ordered$country)),
       selectInput("year_select", "Select Year:", choices = c("All", as.character(unique(data_ordered$year))))
     ),
     mainPanel(
