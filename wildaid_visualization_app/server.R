@@ -69,14 +69,17 @@ function(input, output, session) {
   
   # DT summary datatable ----
   output$summary_table <- DT::renderDataTable(
-    DT::datatable(
-      summary_table_cat <- MPS_tracker_data %>%
+    DT::datatable(data = MPS_tracker_data %>%
         filter(visualization_include == "yes") %>%
+        select(-visualization_include) %>% 
         group_by(year, site, category) %>%
         summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
         pivot_wider(names_from = category,
                     values_from = c(mean_score),
-                    names_sep = " "), #finding mean of scores and displaying with categories as header
+                    names_sep = " ") %>%#finding mean of scores and displaying with categories as header
+        mutate(average = 
+                 round(mean(c_across(c(1:5)), na.rm = TRUE), 1)) %>%
+      rename_with(str_to_title), 
                   rownames = FALSE,
                   selection = "none",
                   escape=TRUE, # don't understand what this does could be important
@@ -85,7 +88,8 @@ function(input, output, session) {
                   options = list(
                     pageLength = 10, autoWidth = TRUE,
                     scrollX = TRUE
-                  )))
+                  ))
+    )
   
   # LEAFLET MAP  ----
   
