@@ -67,8 +67,8 @@ function(input, output, session) {
                   ) ) |> DT::formatStyle(columns = c(1, 2, 3, 4, 5, 6, 7, 8), fontSize = '70%')) 
   #browser()
   
-  # DT summary datatable ----
-  output$summary_table <- DT::renderDataTable(
+  # DT summary datatable, SITE LEVEL ----
+  output$summary_table_site <- DT::renderDataTable(
     DT::datatable(data = MPS_tracker_data %>%
         filter(visualization_include == "yes") %>%
         select(-visualization_include) %>% 
@@ -90,6 +90,30 @@ function(input, output, session) {
                     scrollX = TRUE
                   ))
     )
+  
+  # DT summary datatable, COUNTRY LEVEL ----
+  output$summary_table_country <- DT::renderDataTable(
+    DT::datatable(data = MPS_tracker_data %>%
+                    filter(visualization_include == "yes") %>%
+                    select(-visualization_include) %>% 
+                    group_by(year, country, category) %>%
+                    summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
+                    pivot_wider(names_from = category,
+                                values_from = c(mean_score),
+                                names_sep = " ") %>%#finding mean of scores and displaying with categories as header
+                    mutate(average = 
+                             round(mean(c_across(c(1:5)), na.rm = TRUE), 1)) %>%
+                    rename_with(str_to_title), 
+                  rownames = FALSE,
+                  selection = "none",
+                  escape=TRUE, # don't understand what this does could be important
+                  caption = "Here is a summary table showing annual mean scores for each country.",
+                  filter = 'top',
+                  options = list(
+                    pageLength = 10, autoWidth = TRUE,
+                    scrollX = TRUE
+                  ))
+  )
   
   # LEAFLET MAP  ----
   

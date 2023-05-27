@@ -98,10 +98,12 @@ dashboardPage(
                      tabPanel(title = "Explore Data", icon = icon("magnifying-glass"),
                               tags$h4("Scroll through all of our enforcement data and use the filters above each column to subset the data to what you would like to see. Note: to see all of the notes in the comments section, hover the mouse over the text."),
                               DTOutput("dt_table")),
-                     # summary table here 
-                     tabPanel(title = "Summary Table", icon = icon("table"), DTOutput("summary_table"))) 
-              
-      ), # end data tab
+                     # summary tables here 
+                     tabPanel(title = "Summary Table (Site-level)", icon = icon("table"), DTOutput("summary_table_site")), 
+                    tabPanel(title = "Summary Table (Country-level)", icon = icon("table"), DTOutput("summary_table_country"))) 
+    
+  ),
+      # end data tab
       
       # Visualization tab ----
       tabItem(tabName = "visualizations",
