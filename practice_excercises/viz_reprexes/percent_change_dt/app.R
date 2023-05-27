@@ -34,7 +34,7 @@ perc_chg_site <- MPS_tracker_data |>
   group_by(site, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
   arrange(site, year) |> 
-  mutate(percent_change = (score - lag(score))/lag(score) * 100) |> 
+  mutate(percent_change = round((score - lag(score))/lag(score) * 100, 3)) |> 
   select(site, year, percent_change) |> 
   pivot_wider(names_from = year, values_from = percent_change) 
 
@@ -44,13 +44,21 @@ sorted_year_columns <- colnames(perc_chg_site)[order(as.numeric(colnames(perc_ch
 perc_chg_site <- perc_chg_site[, sorted_year_columns] |> 
   select(site, everything())
 
+# Add percent symbols 
+columns_to_format <- names(perc_chg_site)[2:length(names(perc_chg_site))]
+
+perc_chg_site[columns_to_format] <- lapply(perc_chg_site[columns_to_format], function(x) {
+  x[!is.na(x)] <- paste0(x[!is.na(x)], "%")
+  x
+})
+
 # OK now let's do that same thing but with country instead 
 perc_country <- MPS_tracker_data |> 
   filter(visualization_include == "yes") |> 
   group_by(country, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
   arrange(country, year) |> 
-  mutate(percent_change = (score - lag(score))/lag(score) * 100) |> 
+  mutate(percent_change = round((score - lag(score))/lag(score) * 100, 3)) |> 
   select(country, year, percent_change) |> 
   pivot_wider(names_from = year, values_from = percent_change)
 
@@ -59,6 +67,15 @@ sorted_country_columns <- colnames(perc_country)[order(as.numeric(colnames(perc_
 # Reorder the columns in the dataframe
 perc_country <- perc_country[, sorted_country_columns] |> 
   select(country, everything())
+
+# Add percent symbols 
+columns_to_format <- names(perc_country)[2:length(names(perc_country))]
+
+perc_country[columns_to_format] <- lapply(perc_country[columns_to_format], function(x) {
+  x[!is.na(x)] <- paste0(x[!is.na(x)], "%")
+  x
+})
+
 
 # construct shiny app 
 shinyApp(
