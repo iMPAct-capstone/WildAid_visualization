@@ -100,7 +100,10 @@ dashboardPage(
                               DTOutput("dt_table")),
                      # summary tables here 
                      tabPanel(title = "Summary Table (Site-level)", icon = icon("table"), DTOutput("summary_table_site")), 
-                    tabPanel(title = "Summary Table (Country-level)", icon = icon("table"), DTOutput("summary_table_country"))) 
+                    tabPanel(title = "Summary Table (Country-level)", icon = icon("table"), DTOutput("summary_table_country")),
+                    tabPanel(title = "Score Percent Change", icon = icon("arrow-down-up-across-line"),
+                             DTOutput("perc_chg_dt"))
+                    ) # END TAB BOX
     
   ),
       # end data tab

@@ -72,3 +72,19 @@ mean_data <- MPS_tracker_data |>
   group_by(country) |> 
   summarise(mean_score = mean(score))
 
+# PERCENT CHANGE TABLE SETUP ----
+perc_1 <- MPS_tracker_data |> 
+  filter(visualization_include == "yes") |> 
+  group_by(site, year) |> 
+  summarise(score = mean(score, na.rm = TRUE)) |> 
+  arrange(site, year) |> 
+  mutate(percent_change = (score - lag(score))/lag(score) * 100) |> 
+  select(site, year, percent_change) |> 
+  pivot_wider(names_from = year, values_from = percent_change) 
+
+# Sort the year columns based on their numeric values
+sorted_year_columns <- colnames(perc_1)[order(as.numeric(colnames(perc_1)))]
+# Reorder the columns in the dataframe
+perc_chg_mps <- perc_1[, sorted_year_columns] |> 
+  select(site, everything())
+

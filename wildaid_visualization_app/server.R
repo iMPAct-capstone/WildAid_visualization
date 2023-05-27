@@ -125,6 +125,21 @@ function(input, output, session) {
       DT::formatStyle(columns = c(1:8), fontSize = '70%')
   )
   
+  # DT PERCENT CHANGE TABLE ----
+  output$perc_chg_dt <- DT::renderDataTable(
+    DT::datatable(data = perc_chg_mps, # take out a column
+                  rownames = FALSE,
+                  #escape=TRUE, # don't understand what this does could be important
+                  caption = "This table shows percent change (positive or negative) for the average of all scores for each site from year to year.  For example, the percent change in the 2022 column reflects the percent change for that site in 2021.  The blank values mean that there was no previous data entrys for that site the previous year, therefore a percent change cannot be calculated.",
+                  selection = "none",
+                  options = list(
+                    pageLength = 40, 
+                    autoWidth = TRUE,
+                    fixedHeader = TRUE,
+                    scrollX = TRUE
+                  )
+    ))
+  
   # LEAFLET MAP  ----
   
   # Define your scoring scale and associated colors

@@ -75,7 +75,7 @@ perc_1 <- MPS_tracker_data |>
 # Sort the year columns based on their numeric values
 sorted_year_columns <- colnames(perc_1)[order(as.numeric(colnames(perc_1)))]
 # Reorder the columns in the dataframe
-perc_2 <- perc_1[, sorted_year_columns] |> 
+perc_chg_mps <- perc_1[, sorted_year_columns] |> 
   select(site, everything())
 
 
@@ -124,17 +124,20 @@ shinyApp(
     
     # DT datatable ----
     output$perc_chg_dt <- DT::renderDataTable(
-      DT::datatable(data = select(MPS_tracker_data, -visualization_include), # take out a column
+      DT::datatable(data = perc_chg_mps, # take out a column
                     rownames = FALSE,
-                    escape=TRUE, # don't understand what this does could be important
-                    caption = "Here is a filter-able compilation of all of our data",
-                    filter = 'top',
+                    #escape=TRUE, # don't understand what this does could be important
+                    caption = "This table shows percent change (positive or negative) for the average of all scores for each site from year to year.  For example, the percent change in the 2022 column reflects the percent change for that site in 2021.  The blank values mean that there was no previous data entrys for that site the previous year, therefore a percent change cannot be calculated.",
+                    #filter = 'top',
                     options = list(
-                      pageLength = 10, autoWidth = TRUE,
-                      columnDefs = list(list(targets = 5, width = '80px'),
-                                        list(targets = 6, width = '400px'),
-                                        list(targets = 3, width = '10px')), # play with column widths
-                      scrollX = TRUE
-                    )))
+                                   pageLength = 40, 
+                    # autoWidth = TRUE
+                    #   columnDefs = list(list(targets = 5, width = '80px'),
+                    #                     list(targets = 6, width = '400px'),
+                    #                     list(targets = 3, width = '10px')), # play with column widths
+                      scrollX = TRUE,
+                    fixedHeader = TRUE
+                    )
+      ))
   }
 )
