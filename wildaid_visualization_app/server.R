@@ -145,7 +145,9 @@ function(input, output, session) {
                     pageLength = 40,
                     scrollX = TRUE,
                     fixedHeader = TRUE
-                  )))
+                  )) |> 
+      formatStyle("site", textOverflow = "ellipsis", whiteSpace = "nowrap")
+    )
   
   
   # DT perc change table for country level 
