@@ -3,7 +3,7 @@ Here's all that we have to do to complete the visualization application
 
 DONE - explore data table is not working! fix imediately
 **i think this has something to do with the visualization include column
-- there are errors with the graphs. We need to maybe change these to messages instead.  Are these errors caused because the data is not there? Or is it something else
+I THINK WE'RE GOOD HERE?  - there are errors with the graphs. We need to maybe change these to messages instead.  Are these errors caused because the data is not there? Or is it something else
 DONE - make it pretty.  We need some pictures and we need to finalize all the text that is in there (high priority)
 DONE - see if you can turn off the blue highlighting in the DT tables.  OR see how easy it is to make the export button work (very low)
 - add new sites to the map (pretty low, would look good in presentation) also silvia could theoretically do this herself
