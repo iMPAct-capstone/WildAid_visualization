@@ -10,8 +10,9 @@ DONE - see if you can turn off the blue highlighting in the DT tables.  OR see h
 - add documentation to the help button (must be done before public presentation)
 DONE - make sure the data ingested into the visualizations are filtered with the "visualization_include" parameter. (high) AND also set the "visualization_include" to "no" for the community benefits category
 - let sivlia know about (more importantly - put in the technical documentation) the site_active = "current" function in the "map_data" google sheet.  Should we change this to 'visualization_iclude' also? 
-- add average score column in summary table (high)
-- add a country summary table with an average column as well (high)
+**looks like this has been changed to 'visualization_include' already?
+DONE - add average score column in summary table (high)
+DONE - add a country summary table with an average column as well (high)
 - add percent change summary table for the sites accross the years (medium? this seems hard)
 - add either static numbers for scores on the lollipop plot or wrap it with plotly so the user can hover and see the scores exact number (medium) 
 - create lollipop plot but for countries instead of sites (medium)
