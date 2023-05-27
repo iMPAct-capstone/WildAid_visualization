@@ -126,17 +126,38 @@ function(input, output, session) {
   )
   
   # DT PERCENT CHANGE TABLE ----
-  output$perc_chg_dt <- DT::renderDataTable(
-    DT::datatable(data = perc_chg_mps, # take out a column
+  # renders UI input. One of the two tables
+  output$perc_chg_table <- renderUI({
+    if (input$tableSelector == "Site Level") {
+      dataTableOutput("perc_chg_site")
+    } else if (input$tableSelector == "Country Level") {
+      dataTableOutput("perc_chg_country")
+    }
+  })
+  
+  # DT perc change site level ----
+  output$perc_chg_site <- DT::renderDataTable(
+    DT::datatable(data = perc_chg_site, 
                   rownames = FALSE,
-                  #escape=TRUE, # don't understand what this does could be important
                   caption = "This table shows percent change (positive or negative) for the average of all scores for each site from year to year.  For example, the percent change in the 2022 column reflects the percent change for that site in 2021.  The blank values mean that there was no previous data entrys for that site the previous year, therefore a percent change cannot be calculated.",
                   selection = "none",
                   options = list(
-                    pageLength = 40, 
-                    autoWidth = TRUE,
-                    fixedHeader = TRUE,
-                    scrollX = TRUE
+                    pageLength = 40,
+                    scrollX = TRUE,
+                    fixedHeader = TRUE
+                  )))
+  
+  
+  # DT perc change table for country level 
+  output$perc_chg_country <- DT::renderDataTable(
+    DT::datatable(data = perc_country, 
+                  rownames = FALSE,
+                  caption = "This table shows percent change (positive or negative) for the average of all scores for each country from year to year.  For example, the percent change in the 2022 column reflects the percent change for that country in 2021.  The blank values mean that there was no previous data entrys for that country the previous year, therefore a percent change cannot be calculated.",
+                  selection = "none",
+                  options = list(
+                    pageLength = 40,
+                    scrollX = TRUE,
+                    fixedHeader = TRUE
                   )
     ))
   

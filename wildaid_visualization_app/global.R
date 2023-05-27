@@ -73,7 +73,7 @@ mean_data <- MPS_tracker_data |>
   summarise(mean_score = mean(score))
 
 # PERCENT CHANGE TABLE SETUP ----
-perc_1 <- MPS_tracker_data |> 
+perc_chg_site <- MPS_tracker_data |> 
   filter(visualization_include == "yes") |> 
   group_by(site, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
@@ -83,8 +83,25 @@ perc_1 <- MPS_tracker_data |>
   pivot_wider(names_from = year, values_from = percent_change) 
 
 # Sort the year columns based on their numeric values
-sorted_year_columns <- colnames(perc_1)[order(as.numeric(colnames(perc_1)))]
+sorted_year_columns <- colnames(perc_chg_site)[order(as.numeric(colnames(perc_chg_site)))]
 # Reorder the columns in the dataframe
-perc_chg_mps <- perc_1[, sorted_year_columns] |> 
+perc_chg_site <- perc_chg_site[, sorted_year_columns] |> 
   select(site, everything())
+
+# OK now let's do that same thing but with country instead 
+perc_country <- MPS_tracker_data |> 
+  filter(visualization_include == "yes") |> 
+  group_by(country, year) |> 
+  summarise(score = mean(score, na.rm = TRUE)) |> 
+  arrange(country, year) |> 
+  mutate(percent_change = (score - lag(score))/lag(score) * 100) |> 
+  select(country, year, percent_change) |> 
+  pivot_wider(names_from = year, values_from = percent_change)
+
+# Sort the year columns based on their numeric values
+sorted_country_columns <- colnames(perc_country)[order(as.numeric(colnames(perc_country)))]
+# Reorder the columns in the dataframe
+perc_country <- perc_country[, sorted_country_columns] |> 
+  select(country, everything())
+
 

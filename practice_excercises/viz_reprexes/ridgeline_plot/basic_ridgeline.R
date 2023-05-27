@@ -69,7 +69,7 @@ facet_hist <- MPS_tracker_data |>
   scale_y_continuous(limits = c(0,0.6)) +
   theme_bw() + 
   theme(legend.position = "none") + 
-  scale_fill_brewer(palette = "Set2", alpha = 0.2)
+  scale_fill_brewer(palette = "Set2")
 
 facet_hist
 
