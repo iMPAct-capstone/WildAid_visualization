@@ -196,14 +196,44 @@ dashboardPage(
                                   plotOutput("linegraph"))
                                 )
                               ),
+                     
+                     ## SCORE BY COUNTRY HISTOGRAMS:
                      tabPanel(title = "Compare Score by Country", icon = icon("earth"),
+                              style = "height: 1000px; overflow-y: scroll;",
                               br(),
                               h2("Distributions of scores for the countries that WildAid Marine works with"),
                               p("Here are the density historgrams depicting the current scores at each of the countries where WildAid helps facilitate their marine protection enforcement. The vertical line shows the mean score across the entire country."),
                               br(),
                               br(),
                               mainPanel(
-                                plotOutput("facet_hist", height = 500, width = 900))
+                                fluidRow(
+                                  column(width = 6,
+                                         box(width = NULL,
+                                         selectInput("hist_country_select1", "Select Country:", choices = unique(data_ordered$country)),
+                                         selectInput("hist_year_select1", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot1", width = "100%")
+                                  )), # end first quadrant
+                                  column(width = 6,
+                                         box(width = NULL,
+                                         selectInput("hist_country_select2", "Select Country:", choices = unique(data_ordered$country)),
+                                         selectInput("hist_year_select2", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot2", width = "100%")
+                                  )) # end second quadrant
+                                ), # end fluid row 1
+                                
+                                fluidRow(
+                                  column(width = 6,
+                                         box(width = NULL,
+                                         selectInput("hist_country_select3", "Select Country:", choices = unique(data_ordered$country)),
+                                         selectInput("hist_year_select3", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot3", width = "100%"))),
+                                  column(width = 6,
+                                         box(width = NULL,
+                                         selectInput("hist_country_select4", "Select Country:", choices = unique(data_ordered$country)),
+                                         selectInput("hist_year_select4", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot4", width = "100%")))
+                                ) 
+                                )
                      ))
       ) # end viz tab
       
