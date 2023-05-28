@@ -24,9 +24,6 @@ library(shinyauthr)
 
 # auto-authenticate google sheets ... this will have you interactively authenticate using browser the first time and then after that, you are good to go!
 
-options(gargle_oauth_cache = ".secrets")
-drive_auth(cache = ".secrets", email = "jaredpetry@ucsb.edu")
-gs4_auth(token = drive_token())
 
 # USER LOGIN INFORMATION 
 
@@ -67,6 +64,8 @@ map_data <- read_sheet(map_url) |>
   filter(active_site == "current") |> 
   separate(status, into = c("status_numb", "status_key"), sep = " - ", remove = FALSE) |> 
   mutate(status_numb = as.numeric(status_numb)) |> 
+  mutate(latitude = as.numeric(latitude)) |> 
+  mutate(longitude = as.numeric(longitude)) |> 
   filter(active_site == "current")
 
 # mean_data for faceted histogram
