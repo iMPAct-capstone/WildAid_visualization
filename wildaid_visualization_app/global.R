@@ -41,8 +41,12 @@ user_base <- tibble::tibble(
 
 # Read in our MPS data ----
 
-url <- "https://docs.google.com/spreadsheets/d/1cUz4WZ1CRHFicuVUt82kJ_mL9Ur861Dn1c0BYu3NmRY/edit#gid=0"
-MPS_tracker_data <- read_sheet(url)
+folder_url <- "https://drive.google.com/drive/u/0/folders/11jjznh0MFuhy8oLxHp8uGePF4xR5T-GW"
+files <- drive_ls(folder_url) |>
+  filter(name == "compiled_MPS")
+main_sheet_id <- as_id(files)
+
+MPS_tracker_data <- read_sheet(main_sheet_id)
 
 datatable(MPS_tracker_data)
 
