@@ -181,6 +181,7 @@ function(input, output, session) {
   # map output
   output$MPA_map <- renderLeaflet({
     leaflet(data = sites_w_color) %>%
+      setView(lng = 0, lat = 0, zoom = 2) %>%
       addProviderTiles(providers$Esri.WorldStreetMap,
                        options = providerTileOptions(noWrap = FALSE)
       ) %>%
@@ -194,7 +195,8 @@ function(input, output, session) {
                                       "Partners: ", sites_w_color$partners, "<br>",
                                       "Site Manager(s): ", sites_w_color$p_ms, "<br>", 
                                       "Implementation Status: ", sites_w_color$status)) |> 
-      addLegend(colors = color_palette,
+      addLegend(title = "Implementation Status",
+                colors = color_palette,
                 labels = status_word,
                 position = "bottomright")
   })
