@@ -5,7 +5,7 @@ Here's all that we have to do to complete the visualization application
 STILL NEED:
 (seems good enough for now for a runthrough for our presentation)
 
-- create lollipop plot but for countries instead of sites (medium)
+DONE - create lollipop plot but for countries instead of sites (medium)
 - include another lollipop plot for percent change instead of scores (medium)
 - need to get the google sheets into silvia's google drive and then change the links to the sheets in her drive to read in the data and then we have to edit the auto authentication thing so that it will read from her google drive 
 DONE - maybe see if I can lengthen the length of the dashboard page so that the tabPanel isn't weirdly overlapping 

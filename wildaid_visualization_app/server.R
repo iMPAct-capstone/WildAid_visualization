@@ -201,7 +201,7 @@ function(input, output, session) {
                 position = "bottomright")
   })
   
-  # LOLLIPOP PLOT ----
+  # LOLLIPOP PLOT SITE LEVEL ----
   
   # get the order right for the user input
   custom_order <- reactive({
@@ -264,6 +264,68 @@ function(input, output, session) {
       facet_wrap(~site, ncol=1)
   })
   
+  # LOLLIPOP PLOT COUNTRY LEVEL ----
+  
+  # get the order right for the user input
+  custom_order2 <- reactive({
+    unique(c(input$country_1, input$country_2, input$country_3, input$country_4))
+  })
+  
+  # build reactive dataframe
+  lollidat2 <- reactive({data_ordered |> 
+      arrange(year) |> 
+      filter(year %in% c(input$year_selection), # user picks year
+             country %in% c(input$country_1, # user picks sites
+                         input$country_2,
+                         input$country_3,
+                         input$country_4)) |> 
+      group_by(category, country) |> 
+      summarise(score = round(mean(score, na.rm = TRUE), 2)) |> 
+      mutate(country = factor(country, levels = custom_order2()))
+    
+  })
+  
+  
+  
+  # make our grouped lollipop plot
+  plot_limits <- c(0,6)
+  plot_margin <- c(50, 5, 5, 5)
+  
+  output$lolliPlot_country <- renderPlot({
+    ggplot(lollidat2()) +
+      geom_segment( aes(x=category, xend=category, y=1, yend=score), color="grey") +
+      geom_point( aes(x=category, y=score, color=country), size=3 ) +
+      geom_label(aes(x=category, y=score, label = score),
+                 nudge_x = 0,
+                 nudge_y = 0.2) +
+      coord_flip()+
+      theme_ipsum() +
+      theme(
+        text = element_text(family = "Arial"),
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.spacing = unit(0.1, "lines"),
+        strip.text.x = element_text(size = 15,
+                                    family = "Arial"), 
+        axis.text.y = element_text(size = 15,
+                                   family = "Arial"), 
+        plot.title = element_text(size = 15,
+                                  family = "Arial"),
+        axis.title.x = element_text(hjust = 0.5,
+                                    margin = margin(r = 50),
+                                    size = 12,
+                                    family = "Arial"),
+        axis.title.y = element_text(hjust = 0.5,
+                                    margin = margin(r = 30),
+                                    size = 12,
+                                    family = "Arial"),
+        plot.margin = margin(plot_margin, "pt")
+      ) +
+      scale_y_continuous(limits = c(1,5)) +
+      xlab("Scoring Category") +
+      ylab("Score") +
+      facet_wrap(~country, ncol=1)
+  })
   
   
   # LINE GRAPH ----

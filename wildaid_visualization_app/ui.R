@@ -129,7 +129,7 @@ dashboardPage(
                      # tab panels NOTE: there's an additional argument "value" that could be useful... look later
                      
                      
-                     tabPanel(title = "Compare category scores between MPA sites", icon = icon("square-poll-horizontal"),
+                     tabPanel(title = "Category Scores by Site", icon = icon("square-poll-horizontal"),
                               tags$h3("Select year and up to four sites accross which you would like to compare category scores."),
                               tags$p("NOTE: If there is no output for what you selected, the data for the site and year you have selected does not exist. (See error below when this happens.)"),
                               sidebarLayout(
@@ -168,6 +168,46 @@ dashboardPage(
                               )
                      ),
                      
+                     ## COMPARE CATEGORY SCORES BY COUNTRY
+                     tabPanel(title = "Category Scores by Country", icon = icon("square-poll-horizontal"),
+                              tags$h3("Select year and up to four sites accross which you would like to compare category scores."),
+                              tags$p("NOTE: If there is no output for what you selected, the data for the site and year you have selected does not exist. (See error below when this happens.)"),
+                              sidebarLayout(
+                                sidebarPanel(width = 3,
+                                             selectInput("year_selection", 
+                                                         label = h3("Select year"), 
+                                                         choices = unique(data_ordered$year), # having trouble making this appear in order
+                                                         selected = c(2022),
+                                                         selectize = FALSE), # is this necessary?? don't think so let's try later
+                                             selectInput("country_1", 
+                                                         label = h3("Select country 1"), 
+                                                         choices = unique(data_ordered$country), # having trouble making this appear in order
+                                                         selected = c("Mexico"),
+                                                         selectize = FALSE),
+                                             selectInput("country_2",
+                                                         label = h3("Select country 2"), 
+                                                         choices = unique(data_ordered$country), # having trouble making this appear in order
+                                                         selected = c("Tanzania"),
+                                                         selectize = FALSE),
+                                             selectInput("country_3",
+                                                         label = h3("Select country 3"), 
+                                                         choices = unique(data_ordered$country), # having trouble making this appear in order
+                                                         selected = c("Ecuador"),
+                                                         selectize = FALSE),
+                                             selectInput("country_4",
+                                                         label = h3("Select country 4"), 
+                                                         choices = unique(data_ordered$country), # having trouble making this appear in order
+                                                         selected = c("Costa Rica"),
+                                                         selectize = FALSE)
+                                ),
+                                
+                                # Show a plot of the generated distribution
+                                mainPanel(
+                                  plotOutput("lolliPlot_country", width = 800, height = 600)
+                                )
+                              )
+                     ),
+                     
                      tabPanel(title = "Category scores over time", icon = icon("chart-line"), 
                               # title text 
                               tags$h2("Visualize category scores changing over time"),
@@ -198,7 +238,7 @@ dashboardPage(
                               ),
                      
                      ## SCORE BY COUNTRY HISTOGRAMS:
-                     tabPanel(title = "Compare Score by Country", icon = icon("earth"),
+                     tabPanel(title = "Distributions of Scores by Country", icon = icon("earth"),
                               #style = "height: 1000px; overflow-y: scroll;",
                               br(),
                               h2("Distributions of scores for the countries that WildAid Marine works with"),
