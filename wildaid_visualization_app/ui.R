@@ -136,27 +136,27 @@ dashboardPage(
                                 sidebarPanel(width = 3,
                                   selectInput("year_selection", 
                                               label = h3("Select year"), 
-                                              choices = unique(MPS_tracker_data$year), # having trouble making this appear in order
+                                              choices = unique(data_ordered$year), # having trouble making this appear in order
                                               selected = c(2022),
                                               selectize = FALSE), # is this necessary?? don't think so let's try later
                                   selectInput("site_1", 
                                               label = h3("Select site 1"), 
-                                              choices = unique(MPS_tracker_data$site), # having trouble making this appear in order
+                                              choices = unique(data_ordered$site), # having trouble making this appear in order
                                               selected = c("Reserva Ecológica Manglares Churute"),
                                               selectize = FALSE),
                                   selectInput("site_2",
                                               label = h3("Select site 2"), 
-                                              choices = unique(MPS_tracker_data$site), # having trouble making this appear in order
+                                              choices = unique(data_ordered$site), # having trouble making this appear in order
                                               selected = c("Galapagos Marine Reserve"),
                                               selectize = FALSE),
                                   selectInput("site_3",
                                               label = h3("Select site 3"), 
-                                              choices = unique(MPS_tracker_data$site), # having trouble making this appear in order
+                                              choices = unique(data_ordered$site), # having trouble making this appear in order
                                               selected = c("Parque Nacional Machalilla"),
                                               selectize = FALSE),
                                   selectInput("site_4",
                                               label = h3("Select site 4"), 
-                                              choices = unique(MPS_tracker_data$site), # having trouble making this appear in order
+                                              choices = unique(data_ordered$site), # having trouble making this appear in order
                                               selected = c("Refugio de Vida Silvestre Manglares El Morro"),
                                               selectize = FALSE)
                                 ),
@@ -202,34 +202,68 @@ dashboardPage(
                               style = "height: 1000px; overflow-y: scroll;",
                               br(),
                               h2("Distributions of scores for the countries that WildAid Marine works with"),
-                              p("Here are the density historgrams depicting the current scores at each of the countries where WildAid helps facilitate their marine protection enforcement. The vertical line shows the mean score across the entire country."),
-                              br(),
-                              br(),
+                              p("Here are density histograms depicting the current scores at each of the countries where WildAid helps facilitate their marine protection enforcement. Select which countrys you would like to compare, and either a specific year or all years.  You can also compare the same country across different years.  The vertical line shows the mean score across the entire country."),
                               mainPanel(width = 12,
                                 
                                 fluidRow(
                                   column(width = 6,
-                                         selectInput("hist_country_select1", "Select Country:", choices = unique(data_ordered$country)),
-                                         selectInput("hist_year_select1", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
-                                         plotOutput("histogram_plot1", width = "auto")
+                                         selectInput("hist_country_select1", 
+                                                     "Select Country:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = unique(data_ordered$country), 
+                                                     selected = "Ecuador"),
+                                         selectInput("hist_year_select1", 
+                                                     "Select Year:", 
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot1", width = "auto", height = "333px")
                                   ), # end first quadrant
                                   column(width = 6,
-                                         selectInput("hist_country_select2", "Select Country:", choices = unique(data_ordered$country)),
-                                         selectInput("hist_year_select2", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
-                                         plotOutput("histogram_plot2", width = "auto")
+                                         selectInput("hist_country_select2", 
+                                                     "Select Country:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = unique(data_ordered$country),
+                                                     selected = "Bahamas"),
+                                         selectInput("hist_year_select2", 
+                                                     "Select Year:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot2", width = "auto", height = "333px")
                                   ) # end second quadrant
                                 ), # end fluid row 1
                                 
                                 fluidRow(
                                   column(width = 6,
-                                         selectInput("hist_country_select3", "Select Country:", choices = unique(data_ordered$country)),
-                                         selectInput("hist_year_select3", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
-                                         plotOutput("histogram_plot3", width = "auto")
+                                         selectInput("hist_country_select3", 
+                                                     "Select Country:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = unique(data_ordered$country),
+                                                     selected = "Tanzania"),
+                                         selectInput("hist_year_select3", 
+                                                     "Select Year:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot3", width = "auto", height = "333px")
                                          ), # end third quadrant 
                                   column(width = 6,
-                                         selectInput("hist_country_select4", "Select Country:", choices = unique(data_ordered$country)),
-                                         selectInput("hist_year_select4", "Select Year:", choices = c("All", as.character(unique(data_ordered$year)))),
-                                         plotOutput("histogram_plot4", width = "auto")
+                                         selectInput("hist_country_select4", 
+                                                     "Select Country:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = unique(data_ordered$country),
+                                                     selected = "Gabon"),
+                                         selectInput("hist_year_select4", 
+                                                     "Select Year:",
+                                                     size = "sm",
+                                                     selectize = FALSE,
+                                                     choices = c("All", as.character(unique(data_ordered$year)))),
+                                         plotOutput("histogram_plot4", width = "auto", height = "333px")
                                          ) # end fourth quadrant 
                                 ) # end fluidRow 2
                                 ) # end main panel 

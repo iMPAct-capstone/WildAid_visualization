@@ -312,6 +312,7 @@ function(input, output, session) {
   # })
   
 ## FOUR HISTOGRAMS FOR COUNTRY SCORES:
+  
   output$histogram_plot1 <- renderPlot({
     selected_country1 <- input$hist_country_select1
     selected_year1 <- input$hist_year_select1
@@ -340,7 +341,7 @@ function(input, output, session) {
       geom_histogram(aes(y = ..density..), fill = "#00A6A6", color = "black",
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
-      geom_text(data = mean_data, aes(x = mean_score, y = 0.5, label = paste0("Mean Score: ", round(mean_score, 2))),
+      geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
                 color = "black", vjust = 0.5, hjust = -0.5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
@@ -380,7 +381,7 @@ function(input, output, session) {
       geom_histogram(aes(y = ..density..), fill = "#F79256", color = "black",
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
-      geom_text(data = mean_data, aes(x = mean_score, y = 0.5, label = paste0("Mean Score: ", round(mean_score, 2))),
+      geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
                 color = "black", vjust = 0.5, hjust = -0.5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
@@ -420,7 +421,7 @@ function(input, output, session) {
       geom_histogram(aes(y = ..density..), fill = "#7FB069", color = "black", 
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
-      geom_text(data = mean_data, aes(x = mean_score, y = 0.5, label = paste0("Mean Score: ", round(mean_score, 2))),
+      geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
                 color = "black", vjust = 0.5, hjust = -0.5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
@@ -459,7 +460,7 @@ function(input, output, session) {
       geom_histogram(aes(y = ..density..), fill = "#E88B84", color = "black",
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
-      geom_text(data = mean_data, aes(x = mean_score, y = 0.5, label = paste0("Mean Score: ", round(mean_score, 2))),
+      geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
                 color = "black", vjust = 0.5, hjust = -0.5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
