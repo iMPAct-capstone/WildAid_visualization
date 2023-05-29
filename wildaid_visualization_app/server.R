@@ -182,7 +182,7 @@ function(input, output, session) {
   output$MPA_map <- renderLeaflet({
     leaflet(data = sites_w_color) %>%
       addProviderTiles(providers$Esri.WorldStreetMap,
-                       options = providerTileOptions(noWrap = TRUE)
+                       options = providerTileOptions(noWrap = FALSE)
       ) %>%
       addCircleMarkers(lng = ~longitude, 
                        lat = ~latitude,
