@@ -270,13 +270,7 @@ function(input, output, session) {
   
   # define the reactive dataframe here with reactive ({})
   line_dat <- reactive({
-    
-    # insert message to select site and score (this is not working right now)
-    # validate(
-    #   need(length(input$site_select) > 0, "Please select a site"),
-    #   need(length(input$sub_category_select) > 0, "Please select a scoring category")
-    # )
-    # 
+
     MPS_tracker_data |> 
       filter(visualization_include == "yes") |> 
       group_by(category, site, year) |> 

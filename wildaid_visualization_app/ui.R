@@ -181,12 +181,12 @@ dashboardPage(
                                 sidebarPanel(
                                   # add an input widget for site
                                   selectInput(inputId = "site_select", label = h4("Select site"), 
-                                              choices = unique(MPS_tracker_data$site), 
+                                              choices = unique(data_ordered$site), 
                                               selected = c("Pemba Channel Conservation Area"),
                                               selectize = FALSE),
                                   # another one for category
                                   selectInput(inputId = "category_select", label = h4("Select scoring category"), 
-                                              choices = unique(MPS_tracker_data$category), 
+                                              choices = unique(data_ordered$category), 
                                               selected = "Fishing Sector Collaboration", 
                                               selectize = FALSE)
                                 ),
