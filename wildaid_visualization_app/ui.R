@@ -22,7 +22,8 @@ dashboardPage(
                   tags$li(class = "dropdown", 
                           tags$a(href = "https://docs.google.com/document/d/15dk6KB_JVgJQiJhoeHW7SKl3iFledNr4Ke_UbWloM9I/edit?usp=share_link", 
                                  icon("question-circle"), # link to user documentation
-                                 "Help"))
+                                 "Help")),
+        tags$li(class = "dropdown", style = "margin-top: 10px; margin-right: 10px;", shinyauthr::logoutUI(id = "logout"))
   ), # end dashboard header
   
   # Dashboard Sidebar ----
@@ -36,8 +37,7 @@ dashboardPage(
   # Dashboard Body ----
   dashboardBody(
     
-    #LOGIN STUFF
-    div(class = "pull-right", shinyauthr::logoutUI(id = "logout")),
+    
     # add login panel UI function
     shinyauthr::loginUI(id = "login"),
     # setup table output to show user info after login
@@ -54,7 +54,7 @@ dashboardPage(
       # Welcome tab ----
       tabItem(tabName = "welcome", 
               #tab box 
-              tabBox(id = "tab_box1", width = 12, 
+              tabBox(id = "tab_box1", width = NULL, 
                      # tab panels
                      tabPanel(title = "About", icon = icon("address-card"),
                               fluidRow(
@@ -80,7 +80,7 @@ dashboardPage(
       # Data tab ----
       tabItem(tabName = "data", 
               #tab box 
-              tabBox(id = "tab_box2", width = 12, 
+              tabBox(id = "tab_box2", width = NULL, 
                      # tab panels
                      tabPanel(title = "About", icon = icon("address-card"),
                               fluidRow(
@@ -125,7 +125,7 @@ dashboardPage(
       # Visualization tab ----
       tabItem(tabName = "visualizations",
               # tab box
-              tabBox(id = "tab_box3", width = 12, 
+              tabBox(id = "tab_box3", width = NULL, 
                      # tab panels NOTE: there's an additional argument "value" that could be useful... look later
                      
                      
@@ -199,11 +199,11 @@ dashboardPage(
                      
                      ## SCORE BY COUNTRY HISTOGRAMS:
                      tabPanel(title = "Compare Score by Country", icon = icon("earth"),
-                              style = "height: 1000px; overflow-y: scroll;",
+                              #style = "height: 1000px; overflow-y: scroll;",
                               br(),
                               h2("Distributions of scores for the countries that WildAid Marine works with"),
                               p("Here are density histograms depicting the current scores at each of the countries where WildAid helps facilitate their marine protection enforcement. Select which countrys you would like to compare, and either a specific year or all years.  You can also compare the same country across different years.  The vertical line shows the mean score across the entire country."),
-                              mainPanel(width = 12,
+                              mainPanel(width = NULL,
                                 
                                 fluidRow(
                                   column(width = 6,
