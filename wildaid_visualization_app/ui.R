@@ -33,7 +33,7 @@ dashboardPage(
     collapsed = TRUE, sidebarMenuOutput("sidebar")
   ), # END Dashboard sidebar
   
-  
+
   # Dashboard Body ----
   dashboardBody(
     
@@ -272,6 +272,7 @@ dashboardPage(
       ) # end viz tab
       
     ) # end Tab ItemSSS 
+      
   ) # end Dashboard body
 ) # end Dashboard Page
 
