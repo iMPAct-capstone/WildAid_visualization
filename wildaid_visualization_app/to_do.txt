@@ -1,24 +1,42 @@
 Here's all that we have to do to complete the visualization application
 **priority level in parenthesis
 
+
+STILL NEED:
+(seems good enough for now for a runthrough for our presentation)
+
+- create lollipop plot but for countries instead of sites (medium)
+- include another lollipop plot for percent change instead of scores (medium)
+- need to get the google sheets into silvia's google drive and then change the links to the sheets in her drive to read in the data and then we have to edit the auto authentication thing so that it will read from her google drive 
+- maybe see if I can lengthen the length of the dashboard page so that the tabPanel isn't weirdly overlapping 
+- get the labels on the lollipop plot working better.. some are cut off when the score gets high ... low priority... had to put this on the backburner for now... only seen in the Galapagos marine reserve 2022 .. you can obviously tell that its a really high score
+
+
+
+
+
 DONE - explore data table is not working! fix imediately
 **i think this has something to do with the visualization include column
 I THINK WE'RE GOOD HERE?  - there are errors with the graphs. We need to maybe change these to messages instead.  Are these errors caused because the data is not there? Or is it something else
 DONE - make it pretty.  We need some pictures and we need to finalize all the text that is in there (high priority)
 DONE - see if you can turn off the blue highlighting in the DT tables.  OR see how easy it is to make the export button work (very low)
-- add new sites to the map (pretty low, would look good in presentation) also silvia could theoretically do this herself
-- add documentation to the help button (must be done before public presentation)
+
+DONE - add documentation to the help button (must be done before public presentation)
 DONE - make sure the data ingested into the visualizations are filtered with the "visualization_include" parameter. (high) AND also set the "visualization_include" to "no" for the community benefits category
-- let sivlia know about (more importantly - put in the technical documentation) the site_active = "current" function in the "map_data" google sheet.  Should we change this to 'visualization_iclude' also? 
-**looks like this has been changed to 'visualization_include' already?
+DONE - let sivlia know about (more importantly - put in the technical documentation) the site_active = "current" function in the "map_data" google sheet.  Should we change this to 'visualization_iclude' also? 
+**looks like this has been changed to 'visualization_include' already? NAH
 DONE - add average score column in summary table (high)
 DONE - add a country summary table with an average column as well (high)
-- add percent change summary table for the sites accross the years (medium? this seems hard)
-- add either static numbers for scores on the lollipop plot or wrap it with plotly so the user can hover and see the scores exact number (medium) 
-- create lollipop plot but for countries instead of sites (medium)
-- include another lollipop plot for percent change instead of scores (medium)
-- change histogram plots to user input select which country they would like to see.  Potentially would be good to view 2-3 at the same time (maybe 4 so it would be a quadrant) this is because as they keep adding new countries it will get way overcrowded. Also let the user toggle between years... right now the graphs show all the data over all the years data was collected. it would probably also be good to label the mean line so that you don't have to just look at it to compare.
-- need to get the google sheets into silvia's google drive and then change the links to the sheets in her drive to read in the data and then we have to edit the auto authentication thing so that it will read from her google drive 
+DONE - add percent change summary table for the sites accross the years (medium? this seems hard)
+DONE - add either static numbers for scores on the lollipop plot or wrap it with plotly so the user can hover and see the scores exact number (medium) 
+
+DONE - change histogram plots to user input select which country they would like to see.  Potentially would be good to view 2-3 at the same time (maybe 4 so it would be a quadrant) this is because as they keep adding new countries it will get way overcrowded. Also let the user toggle between years... right now the graphs show all the data over all the years data was collected. it would probably also be good to label the mean line so that you don't have to just look at it to compare.
 
 
-- the order in which the plots come out in the lollipop plot are really random and hard to keep track of. Need to figure this out.  I think the plot might be ordering them in order of lowest scores to highest top to bottom. super sus! 
+
+
+DONE - the order in which the plots come out in the lollipop plot are really random and hard to keep track of. Need to figure this out.  I think the plot might be ordering them in order of lowest scores to highest top to bottom. super sus! 
+
+
+DONE - if you select two of the same sites in the lollipop plot there is a problem where the custom_order list won't work 
+

@@ -147,7 +147,7 @@ dashboardPage(
                                   selectInput("site_2",
                                               label = h3("Select site 2"), 
                                               choices = unique(data_ordered$site), # having trouble making this appear in order
-                                              selected = c("Galapagos Marine Reserve"),
+                                              selected = c("Reserva de Producción Faunística Puntilla de Santa Elena"),
                                               selectize = FALSE),
                                   selectInput("site_3",
                                               label = h3("Select site 3"), 

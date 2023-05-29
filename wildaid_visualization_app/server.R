@@ -201,6 +201,11 @@ function(input, output, session) {
   
   # LOLLIPOP PLOT ----
   
+  # get the order right for the user input
+  custom_order <- reactive({
+    unique(c(input$site_1, input$site_2, input$site_3, input$site_4))
+    })
+
   # build reactive dataframe
   lollidat <- reactive({data_ordered |> 
       arrange(year) |> 
@@ -210,11 +215,16 @@ function(input, output, session) {
                          input$site_3,
                          input$site_4)) |> 
       group_by(category, site) |> 
-      summarise(score = round(mean(score, na.rm = TRUE), 2))
+      summarise(score = round(mean(score, na.rm = TRUE), 2)) |> 
+      mutate(site = factor(site, levels = custom_order()))
+  
   })
   
-  # make our grouped lollipop plot
   
+  
+  # make our grouped lollipop plot
+  plot_limits <- c(0,6)
+  plot_margin <- c(50, 5, 5, 5)
   
   output$lolliPlot <- renderPlot({
     ggplot(lollidat()) +
@@ -243,12 +253,13 @@ function(input, output, session) {
         axis.title.y = element_text(hjust = 0.5,
                                     margin = margin(r = 30),
                                     size = 12,
-                                    family = "Arial")
+                                    family = "Arial"),
+        plot.margin = margin(plot_margin, "pt")
       ) +
-      scale_y_continuous(limits = c(1, 5), expand = expansion(mult = c(0, 0.2))) +
+      scale_y_continuous(limits = c(1,5)) +
       xlab("Scoring Category") +
       ylab("Score") +
-      facet_wrap(~site, ncol=1, scale="free_y")
+      facet_wrap(~site, ncol=1)
   })
   
   
@@ -281,7 +292,7 @@ function(input, output, session) {
       geom_point(color = "#0099f9", size = 5) + 
       geom_label(aes(label = score),
                  nudge_x = 0,
-                 nudge_y = 0.2) +
+                 nudge_y = 0.1) +
       theme_bw() +
       theme(axis.title.x = element_text(size = 14),
             axis.title.y = element_text(size = 14),
