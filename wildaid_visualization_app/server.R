@@ -210,7 +210,7 @@ function(input, output, session) {
                          input$site_3,
                          input$site_4)) |> 
       group_by(category, site) |> 
-      summarise(score = mean(score, na.rm = TRUE))
+      summarise(score = round(mean(score, na.rm = TRUE), 2))
   })
   
   # make our grouped lollipop plot
@@ -220,6 +220,9 @@ function(input, output, session) {
     ggplot(lollidat()) +
       geom_segment( aes(x=category, xend=category, y=1, yend=score), color="grey") +
       geom_point( aes(x=category, y=score, color=site), size=3 ) +
+      geom_label(aes(x=category, y=score, label = score),
+                 nudge_x = 0,
+                 nudge_y = 0.2) +
       coord_flip()+
       theme_ipsum() +
       theme(
@@ -242,7 +245,7 @@ function(input, output, session) {
                                     size = 12,
                                     family = "Arial")
       ) +
-      scale_y_continuous(limits = c(1, 5)) +
+      scale_y_continuous(limits = c(1, 5), expand = expansion(mult = c(0, 0.2))) +
       xlab("Scoring Category") +
       ylab("Score") +
       facet_wrap(~site, ncol=1, scale="free_y")
