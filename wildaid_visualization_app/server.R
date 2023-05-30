@@ -414,11 +414,17 @@ function(input, output, session) {
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
       geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
-                color = "black", vjust = 0.5, hjust = -0.5) +
+                color = "black", vjust = 0.5, hjust = -0.5, size = 5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
       theme_bw() + 
-      theme(legend.position = "none") 
+      labs(y = "Density",
+           x = "Score") +
+      theme(legend.position = "none",
+            axis.text.x = element_text(size=14),
+            axis.text.y = element_text(size=14),
+            axis.title.x = element_text(size=14),
+            axis.title.y = element_text(size=14)) 
     
     print(facet_hist)
     
@@ -454,11 +460,17 @@ function(input, output, session) {
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
       geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
-                color = "black", vjust = 0.5, hjust = -0.5) +
+                color = "black", vjust = 0.5, hjust = -0.5, size = 5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
       theme_bw() + 
-      theme(legend.position = "none") 
+      labs(y = "Density",
+           x = "Score") +
+      theme(legend.position = "none",
+            axis.text.x = element_text(size=14),
+            axis.text.y = element_text(size=14),
+            axis.title.x = element_text(size=14),
+            axis.title.y = element_text(size=14)) 
     
     print(facet_hist)
     
@@ -490,15 +502,21 @@ function(input, output, session) {
     }
     
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
-      geom_histogram(aes(y = ..density..), fill = "#7FB069", color = "black", 
+      geom_histogram(aes(y = ..density..), fill = "#E88B84", color = "black",
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
       geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
-                color = "black", vjust = 0.5, hjust = -0.5) +
+                color = "black", vjust = 0.5, hjust = -0.5, size = 5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
       theme_bw() + 
-      theme(legend.position = "none") 
+      labs(y = "Density",
+           x = "Score") +
+      theme(legend.position = "none",
+            axis.text.x = element_text(size=14),
+            axis.text.y = element_text(size=14),
+            axis.title.x = element_text(size=14),
+            axis.title.y = element_text(size=14))
     
     print(facet_hist)
     
@@ -529,15 +547,21 @@ function(input, output, session) {
     }
     
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
-      geom_histogram(aes(y = ..density..), fill = "#E88B84", color = "black",
+      geom_histogram(aes(y = ..density..), fill = "#85A0A2", color = "black",
                      binwidth = 1, bins = 5) + 
       geom_vline(data = mean_data, aes(xintercept = mean_score), color = "red",alpha = 0.7) +
       geom_text(data = mean_data, aes(x = mean_score, y = 0.57, label = paste0("Mean Score: ", round(mean_score, 2))),
-                color = "black", vjust = 0.5, hjust = -0.5) +
+                color = "black", vjust = 0.5, hjust = -0.5, size = 5) +
       scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
       scale_y_continuous(limits = c(0,0.6)) +
       theme_bw() + 
-      theme(legend.position = "none") 
+      labs(y = "Density",
+           x = "Score") +
+      theme(legend.position = "none",
+            axis.text.x = element_text(size=14),
+            axis.text.y = element_text(size=14),
+            axis.title.x = element_text(size=14),
+            axis.title.y = element_text(size=14)) 
     
     print(facet_hist)
     
