@@ -2,8 +2,12 @@ Here's all that we have to do to complete the visualization application
 **priority level in parenthesis
 
 
+
 STILL NEED:
 (seems good enough for now for a runthrough for our presentation)
+
+- need help doc to link to PDF instead of the google drive
+- update the password and username
 
 DONE - create lollipop plot but for countries instead of sites (medium)
 - include another lollipop plot for percent change instead of scores (medium)
