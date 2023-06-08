@@ -51,7 +51,6 @@ main_sheet_id <- as_id(files)
 
 MPS_tracker_data <- read_sheet(main_sheet_id)
 
-datatable(MPS_tracker_data)
 
 # make the year column numeric to make the filtering better
 MPS_tracker_data <- MPS_tracker_data |> 
@@ -69,9 +68,10 @@ data_ordered <- MPS_tracker_data |>
 # read in the map data ----
 map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit"
 
+# clean the map data and prepare for visualization in server 
 map_data <- read_sheet(map_url) |> 
   clean_names() |> 
-  filter(active_site == "current") |> 
+  filter(active_site == "current") |>  # make sure that the data is only used if the entry is marked "current"
   separate(status, into = c("status_numb", "status_key"), sep = " - ", remove = FALSE) |> 
   mutate(status_numb = as.numeric(status_numb)) |> 
   mutate(latitude = as.numeric(latitude)) |> 
@@ -87,7 +87,7 @@ mean_data <- MPS_tracker_data |>
 
 # PERCENT CHANGE TABLE SETUP ----
 perc_chg_site <- MPS_tracker_data |> 
-  filter(visualization_include == "yes") |> 
+  filter(visualization_include == "yes") |> # make sure that the data is only used if the entry is marked "yes"
   group_by(site, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
   arrange(site, year) |> 

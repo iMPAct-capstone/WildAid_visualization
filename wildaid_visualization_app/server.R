@@ -42,7 +42,7 @@ function(input, output, session) {
        # end sidebar
   })
   
-  # DT datatable ----
+  # DT datatable (raw data) ----
   output$dt_table <- DT::renderDataTable(
     DT::datatable(data = MPS_tracker_data |> 
                     filter(visualization_include == "yes") |> 
@@ -361,30 +361,9 @@ function(input, output, session) {
       labs(title = paste0(input$category_select," at ", input$site_select, " protected site"))
   })
   
-  # # FACETED HISTOGRAM SCORE BY COUNTRY GRAPH (DECIDED NOT TO USE)
-  # output$facet_hist <- renderPlot({
-  #   MPS_tracker_data |> 
-  #   select(country, score) |> 
-  #   na.omit() |> 
-  #   ggplot(aes(x = score, fill = country)) + 
-  #   geom_histogram(aes(y = ..density..), 
-  #                  binwidth = 1, bins = 5) + 
-  #   geom_vline(data = mean_data, aes(xintercept = mean_score), color = "black",alpha = 0.3) +
-  #   facet_wrap(~country, ncol = 3, scales = 'free') + 
-  #   scale_x_continuous(breaks = c(1,2,3,4,5), limits = c(0,6)) +
-  #   scale_y_continuous(limits = c(0,0.6)) +
-  #   theme_bw() + 
-  #   theme(legend.position = "none",
-  #         axis.title.x = element_text(size = 14, hjust = 0.5),
-  #         axis.title.y = element_text(size = 14, hjust = 0.5,
-  #                                     margin = margin(r = 20))) + 
-  #   scale_fill_brewer(palette = "Set2") +
-  #   labs(title = "Score Density by Country") 
-  #   
-  # })
-  
 ## FOUR HISTOGRAMS FOR COUNTRY SCORES:
   
+  # first histogram setup
   output$histogram_plot1 <- renderPlot({
     selected_country1 <- input$hist_country_select1
     selected_year1 <- input$hist_year_select1
@@ -409,6 +388,7 @@ function(input, output, session) {
         summarise(mean_score = mean(score))
     }
     
+    # first histogram plot
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
       geom_histogram(aes(y = ..density..), fill = "#00A6A6", color = "black",
                      binwidth = 1, bins = 5) + 
@@ -430,6 +410,7 @@ function(input, output, session) {
     
   })
   
+  # second histogram setup
   output$histogram_plot2 <- renderPlot({
     selected_country2 <- input$hist_country_select2
     selected_year2 <- input$hist_year_select2
@@ -454,7 +435,7 @@ function(input, output, session) {
         summarise(mean_score = mean(score))
     }
     
-    
+    # second histogram plot
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
       geom_histogram(aes(y = ..density..), fill = "#F79256", color = "black",
                      binwidth = 1, bins = 5) + 
@@ -476,7 +457,7 @@ function(input, output, session) {
     
   }) 
   
-  
+  # third histogram setup
   output$histogram_plot3 <- renderPlot({
     selected_country3 <- input$hist_country_select3
     selected_year3 <- input$hist_year_select3
@@ -501,6 +482,7 @@ function(input, output, session) {
         summarise(mean_score = mean(score))
     }
     
+    # third histogram plot 
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
       geom_histogram(aes(y = ..density..), fill = "#E88B84", color = "black",
                      binwidth = 1, bins = 5) + 
@@ -522,6 +504,7 @@ function(input, output, session) {
     
   })
   
+  # fourth histogram setup
   output$histogram_plot4 <- renderPlot({
     selected_country4 <- input$hist_country_select4
     selected_year4 <- input$hist_year_select4
@@ -546,6 +529,7 @@ function(input, output, session) {
         summarise(mean_score = mean(score))
     }
     
+    # fourth histogram plot
     facet_hist <- ggplot(filtered_data, aes(x = score)) + 
       geom_histogram(aes(y = ..density..), fill = "#85A0A2", color = "black",
                      binwidth = 1, bins = 5) + 

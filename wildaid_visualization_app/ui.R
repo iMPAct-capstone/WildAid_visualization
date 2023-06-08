@@ -17,7 +17,7 @@ dashboardPage(
                   titleWidth = 400, # how big you want the title
                   tags$li(class = "dropdown", 
                           tags$a(href = "https://marine.wildaid.org/", 
-                                 icon("fish"), # here I just put a fish icon for the wildaid marine website 
+                                 icon("fish"), # icon for the wildaid marine website 
                                  "WildAid Marine")), 
                   tags$li(class = "dropdown", 
                           tags$a(href = "https://docs.google.com/document/d/15dk6KB_JVgJQiJhoeHW7SKl3iFledNr4Ke_UbWloM9I/edit?usp=share_link", 
