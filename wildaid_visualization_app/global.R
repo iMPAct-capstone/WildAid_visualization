@@ -25,7 +25,7 @@ library(shinyauthr)
 # auto-authenticate google sheets ... this will have you interactively authenticate using browser the first time and then after that, you are good to go!
 
 options(gargle_oauth_cache = ".secrets")
-drive_auth(cache = ".secrets", email = "jaredpetry@ucsb.edu")
+drive_auth(cache = ".secrets", email = "adelaide.robinson445@gmail.com")
 gs4_auth(token = drive_token())
 
 # USER LOGIN INFORMATION 
@@ -44,9 +44,9 @@ user_base <- tibble::tibble(
 
 # Read in our MPS data ----
 
-folder_url <- "https://drive.google.com/drive/u/0/folders/11jjznh0MFuhy8oLxHp8uGePF4xR5T-GW"
+folder_url <- "https://drive.google.com/drive/u/1/folders/1AvavGBfoZx_ThcXVn5gL_buQkip76ZtQ"
 files <- drive_ls(folder_url) |>
-  filter(name == "compiled_MPS")
+  filter(name == "mps_tracker_data")
 main_sheet_id <- as_id(files)
 
 MPS_tracker_data <- read_sheet(main_sheet_id)
@@ -67,7 +67,7 @@ data_ordered <- MPS_tracker_data |>
   arrange(year)
 
 # read in the map data ----
-map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit?usp=sharing"
+map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit"
 
 map_data <- read_sheet(map_url) |> 
   clean_names() |> 
