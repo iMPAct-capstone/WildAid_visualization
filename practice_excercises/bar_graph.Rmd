@@ -144,4 +144,4 @@ new_data |> ggplot(aes(y = score, x = year, group = 1)) + geom_line(aes(col= cat
          legend.background = element_rect(fill='transparent'),
          legend.box.background = element_rect(fill='transparent')
        )
-                               
+```
