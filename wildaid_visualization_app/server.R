@@ -44,10 +44,13 @@ function(input, output, session) {
   
   # DT datatable (raw data) ----
   output$dt_table <- DT::renderDataTable(
-    DT::datatable(data = MPS_tracker_data |> mutate(comments =
+    DT::datatable(data = new <- MPS_tracker_data |> 
+                    mutate(comments =
       case_when(is.na(comments)~ "NA",
-                TRUE ~comments)
-    ),
+                TRUE ~comments),
+      score = as.character(score)) |> 
+      mutate(score = case_when(is.na(score) ~ "NA ",
+                TRUE ~score)) |> mutate(score = as.factor(score)),
                   rownames = FALSE,
                   selection = "none",
                   escape=TRUE, # don't understand what this does could be important
@@ -246,11 +249,11 @@ function(input, output, session) {
                                   family = "Arial"),
         axis.title.x = element_text(hjust = 0.5,
                                     margin = margin(r = 50),
-                                    size = 12,
+                                    size = 14,
                                     family = "Arial"),
         axis.title.y = element_text(hjust = 0.5,
                                     margin = margin(r = 30),
-                                    size = 12,
+                                    size = 14,
                                     family = "Arial"),
         plot.margin = margin(plot_margin, "pt")
       ) +
@@ -347,9 +350,11 @@ function(input, output, session) {
                  nudge_x = 0,
                  nudge_y = 0.1) +
       theme_bw() +
-      theme(axis.title.x = element_text(size = 14),
-            axis.title.y = element_text(size = 14),
-            plot.title = element_text(size = 16)) +
+      theme(axis.title.x = element_text(size = 18),
+            axis.title.y = element_text(size = 18),
+            axis.text.x = element_text(size = 14),  # Increase the size of year axis labels
+            axis.text.y = element_text(size = 14),
+            plot.title = element_text(size = 20)) +
       scale_y_continuous(limits = c(1, 5), breaks = c(1,2,3,4,5)) +
       #  scale_x_continuous(limits = c(min(MPS_tracker_data$year), max(MPS_tracker_data$year))) +
       # the above line won't work with year being of class factor but I can't get it to work nicely

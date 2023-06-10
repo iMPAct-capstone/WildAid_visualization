@@ -1,5 +1,5 @@
-library(shiny) 
-library(shinydashboard) 
+ui <- function(req) {
+  source("global.R")
 
 # Dashboard Page ----
 dashboardPage(
@@ -316,5 +316,5 @@ dashboardPage(
   ) # end Dashboard body
 ) # end Dashboard Page
 
-
+}
   

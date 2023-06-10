@@ -5,9 +5,9 @@ account: wildaid
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9280494
-bundleId: 7327017
+bundleId: 7327346
 url: https://wildaid.shinyapps.io/wildaid_visualization_app/
-when: 1686360633.7673
-lastSyncTime: 1686360633.76731
+when: 1686372572.37988
+lastSyncTime: 1686372572.37992
 asMultiple: FALSE
 asStatic: FALSE

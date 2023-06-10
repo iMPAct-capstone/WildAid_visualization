@@ -21,6 +21,8 @@ library(viridis)
 library(gargle)
 library(rsconnect)
 library(shinyauthr)
+library(shiny) 
+library(shinydashboard) 
 
 # auto-authenticate google sheets ... this will have you interactively authenticate using browser the first time and then after that, you are good to go!
 
@@ -68,7 +70,7 @@ data_ordered <- MPS_tracker_data |>
   arrange(year)
 
 # read in the map data ----
-map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit"
+map_url <- "https://docs.google.com/spreadsheets/d/1945sRz1BzspN4hCT5VOTuiNpwSSaWKxfoxZeozrn1_M/edit#gid=1669338265"
 
 # clean the map data and prepare for visualization in server 
 map_data <- read_sheet(map_url) |> 
@@ -78,7 +80,7 @@ map_data <- read_sheet(map_url) |>
   mutate(status_numb = as.numeric(status_numb)) |> 
   mutate(latitude = as.numeric(latitude)) |> 
   mutate(longitude = as.numeric(longitude)) |> 
-  filter(active_site == "current")
+  filter(complete.cases(latitude, longitude))
 
 # mean_data for faceted histogram
 mean_data <- MPS_tracker_data |> 
