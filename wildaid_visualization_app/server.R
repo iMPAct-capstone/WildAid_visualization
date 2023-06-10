@@ -44,10 +44,10 @@ function(input, output, session) {
   
   # DT datatable (raw data) ----
   output$dt_table <- DT::renderDataTable(
-    DT::datatable(data = MPS_tracker_data |> 
-                    filter(visualization_include == "yes") |> 
-                    select(-visualization_include) |>  # take out a column
-                    droplevels(),
+    DT::datatable(data = MPS_tracker_data |> mutate(comments =
+      case_when(is.na(comments)~ "NA",
+                TRUE ~comments)
+    ),
                   rownames = FALSE,
                   selection = "none",
                   escape=TRUE, # don't understand what this does could be important
@@ -77,9 +77,7 @@ function(input, output, session) {
   
   # DT summary datatable, SITE LEVEL ----
   output$summary_table_site <- DT::renderDataTable(
-    DT::datatable(data = MPS_tracker_data %>%
-        filter(visualization_include == "yes") %>%
-        select(-visualization_include) %>% 
+    DT::datatable(data = MPS_tracker_data |> 
         group_by(year, site, country, category) %>%
         summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
         pivot_wider(names_from = category,
@@ -102,9 +100,7 @@ function(input, output, session) {
   
   # DT summary datatable, COUNTRY LEVEL ----
   output$summary_table_country <- DT::renderDataTable(
-    DT::datatable(data = MPS_tracker_data %>%
-                    filter(visualization_include == "yes") %>%
-                    select(-visualization_include) %>% 
+    DT::datatable(data = MPS_tracker_data |> 
                     group_by(year, country, category) %>%
                     summarize(mean_score = round(mean(score, na.rm = TRUE), 1)) %>%
                     pivot_wider(names_from = category,
@@ -274,7 +270,7 @@ function(input, output, session) {
   # build reactive dataframe
   lollidat2 <- reactive({data_ordered |> 
       arrange(year) |> 
-      filter(year %in% c(input$year_selection), # user picks year
+      filter(year %in% c(input$year_selection_c), # user picks year
              country %in% c(input$country_1, # user picks sites
                          input$country_2,
                          input$country_3,
@@ -285,7 +281,7 @@ function(input, output, session) {
     
   })
   
-  
+
   
   # make our grouped lollipop plot
   plot_limits <- c(0,6)
@@ -334,7 +330,6 @@ function(input, output, session) {
   line_dat <- reactive({
 
     MPS_tracker_data |> 
-      filter(visualization_include == "yes") |> 
       group_by(category, site, year) |> 
       summarise(score = round(mean(score, na.rm = TRUE), 2)) |> 
       filter(site %in% c(input$site_select), # could add multiple in future here

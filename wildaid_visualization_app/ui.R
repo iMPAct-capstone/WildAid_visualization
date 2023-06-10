@@ -174,7 +174,7 @@ dashboardPage(
                               tags$p("NOTE: If there is no output for what you selected, the data for the site and year you have selected does not exist. (See error below when this happens.)"),
                               sidebarLayout(
                                 sidebarPanel(width = 3,
-                                             selectInput("year_selection", 
+                                             selectInput("year_selection_c", 
                                                          label = h3("Select year"), 
                                                          choices = unique(data_ordered$year), # having trouble making this appear in order
                                                          selected = c(2022),

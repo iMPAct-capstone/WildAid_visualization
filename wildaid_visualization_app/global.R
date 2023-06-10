@@ -58,11 +58,13 @@ MPS_tracker_data <- MPS_tracker_data |>
          category = as.factor(category), 
          country = as.factor(country)) |> 
   select(-indicator_type) |> # take out indicator type because obsolete 
-  arrange(year)
+  arrange(year) |> 
+  filter(visualization_include == "yes") |> 
+  select(-visualization_include) |> 
+  droplevels()
 
 # order the data by year (for some plots)
-data_ordered <- MPS_tracker_data |>
-  filter(visualization_include == "yes") |>
+data_ordered <- MPS_tracker_data |> 
   arrange(year)
 
 # read in the map data ----
@@ -86,8 +88,7 @@ mean_data <- MPS_tracker_data |>
   summarise(mean_score = mean(score))
 
 # PERCENT CHANGE TABLE SETUP ----
-perc_chg_site <- MPS_tracker_data |> 
-  filter(visualization_include == "yes") |> # make sure that the data is only used if the entry is marked "yes"
+perc_chg_site <- MPS_tracker_data |> # make sure that the data is only used if the entry is marked "yes"
   group_by(site, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
   arrange(site, year) |> 
@@ -111,7 +112,6 @@ perc_chg_site[columns_format_site] <- lapply(perc_chg_site[columns_format_site],
 
 # OK now let's do that same thing but with country instead 
 perc_country <- MPS_tracker_data |> 
-  filter(visualization_include == "yes") |> 
   group_by(country, year) |> 
   summarise(score = mean(score, na.rm = TRUE)) |> 
   arrange(country, year) |> 
